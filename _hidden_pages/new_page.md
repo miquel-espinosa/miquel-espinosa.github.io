@@ -19,15 +19,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-I am a PhD student at the University of Edinburgh under the [SENSE CDT](https://eo-cdt.org/) program, and part of the [BayesWatch](https://www.bayeswatch.com/) research group, advised by [Dr. Elliot J. Crowley](https://elliotjcrowley.github.io/).
-
-My current research lies in the intersection of Machine Learning (Computer Vision) and Earth Observation fields.
-
-My research interests are:
-
-- Diffusion models for Earth Observation.
-- Self-supervised methods for data fusion. Learning semantic representations of satellite images.
-- Adapting foundational models for large domain shift.
+Bla bla bla sample page
 
 
 
