@@ -273,8 +273,8 @@ display_categories: # ['blockquotes'] # these categories will be displayed on th
 
 scholar:
 
-  last_name: [Einstein]
-  first_name: [Albert, A.]
+  last_name: [Espinosa]
+  first_name: [Miguel]
 
   style: apa
   locale: en
