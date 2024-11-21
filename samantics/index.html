@@ -90,7 +90,7 @@
                     </span>
 
                     <!-- Supplementary PDF link -->
-                    <span class="link-block">
+                    <!-- <span class="link-block">
                       <a href="static/pdfs/supplementary_material.pdf" target="_blank"
                       class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
@@ -98,7 +98,7 @@
                       </span>
                       <span>Supplementary</span>
                     </a>
-                  </span>
+                  </span> -->
 
                   <!-- Github link -->
                   <span class="link-block">
@@ -325,7 +325,7 @@
         <h3 class="title is-4 mt-6">T-SNE Exploration</h3>
         <div class="content has-text-justified">
           <p>
-            We make use of t-SNE~\cite{tsne} plots to visualise the features in Figure \ref{fig:tsne-feature-visualisation}. These plots reveal that the class semantic information is not present before the MLP. Instead, class semantics are actually being learned in the MLP layer, therefore overfitting to the classes seen during training. While the MLP layer encodes class information, this semantic structure is absent in the earlier features, highlighting that the semantics that are recovered in the model are specific to the classes we tune on, and that these class-specific cues do not generalise to unseen classes.
+            We make use of t-SNE plots to visualise the features, as shown in the figure below. These plots reveal that the class semantic information is not present before the MLP. Instead, class semantics are actually being learned in the MLP layer, therefore overfitting to the classes seen during training. While the MLP layer encodes class information, this semantic structure is absent in the earlier features, highlighting that the semantics that are recovered in the model are specific to the classes we tune on, and that these class-specific cues do not generalise to unseen classes.
           </p>
         </div>
         <div class="columns is-centered">
