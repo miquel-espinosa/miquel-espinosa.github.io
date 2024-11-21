@@ -1,13 +1,29 @@
 ---
 ---
-@article{ericsson2024einspace,
+@article{espinosa2024samantics,
   abbr={arxiv},
+  author = {Miguel Espinosa and Chenhongyi Yang and Linus Ericsson and Steven McDonagh and Elliot J. Crowley},
+  title = {There is no SAMantics! Exploring SAM as a Backbone for Visual Understanding Tasks},
+  abstract={The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach towards exploring this question. We firstly quantify SAM's semantic capabilities by comparing base image encoder efficacy under classification tasks, in comparison with established models (CLIP and DINOv2). Our findings reveal a significant lack of semantic discriminability in SAM feature representations, limiting potential for tasks that require class differentiation. This initial result motivates our exploratory study that attempts to enable semantic information via in-context learning with lightweight fine-tuning where we observe that generalisability to unseen classes remains limited. Our observations culminate in the proposal of a training-free approach that leverages DINOv2 features, towards better endowing SAM with semantic understanding and achieving instance-level class differentiation through feature-based similarity. Our study suggests that incorporation of external semantic sources provides a promising direction for the enhancement of SAM's utility with respect to complex visual tasks that require semantic understanding.},
+  code={https://github.com/miquel-espinosa/samantics},
+  pdf={https://arxiv.org/pdf/0000.00000},
+  year = {2024},
+  institution = {University of Edinburgh},
+  url = {https://arxiv.org/abs/0000.00000},
+  preview={samantics.png},
+  bibtex_show={true},
+  selected={true},
+}
+
+@article{ericsson2024einspace,
+  abbr={NeurIPS},
   author = {Linus Ericsson and Miguel Espinosa and Chenhongyi Yang and Antreas Antoniou and Amos Storkey and Shay B. Cohen and Steven McDonagh and Elliot J. Crowley},
   title = {einspace: Searching for Neural Architectures from Fundamental Operations},
   abstract={Neural architecture search (NAS) finds high performing networks for a given task. Yet the results of NAS are fairly prosaic; they did not e.g. create a shift from convolutional structures to transformers. This is not least because the search spaces in NAS often aren't diverse enough to include such transformations a priori. Instead, for NAS to provide greater potential for fundamental design shifts, we need a novel expressive search space design which is built from more fundamental operations. To this end, we introduce einspace, a search space based on a parameterised probabilistic context-free grammar. Our space is versatile, supporting architectures of various sizes and complexities, while also containing diverse network operations which allow it to model convolutions, attention components and more. It contains many existing competitive architectures, and provides flexibility for discovering new ones. Using this search space, we perform experiments to find novel architectures as well as improvements on existing ones on the diverse Unseen NAS datasets. We show that competitive architectures can be obtained by searching from scratch, and we consistently find large improvements when initialising the search with strong baselines. We believe that this work is an important advancement towards a transformative NAS paradigm where search space expressivity and strategic search initialisation play key roles.},
   code={https://github.com/linusericsson/einspace},
   pdf={https://arxiv.org/pdf/2405.20838},
   year = {2024},
+  journal = {NeurIPS},
   institution = {University of Edinburgh},
   url = {https://arxiv.org/abs/2405.20838},
   preview={einspace.png},
@@ -16,7 +32,7 @@
 }
 
 @article{yang_2024_3_plainmamba,
-  abbr={arxiv},
+  abbr={BMVC},
   author = {Chenhongyi Yang and Zehui Chen and Miguel Espinosa and Linus Ericsson and Zhenyu Wang and Jiaming Liu and Elliot J. Crowley},
   title = {PlainMamba: Improving Non-Hierarchical Mamba in Visual Recognition},
   abstract={We present PlainMamba: a simple non-hierarchical state space model (SSM) designed for general visual recognition. The recent Mamba model has shown how SSMs can be highly competitive with other architectures on sequential data and initial attempts have been made to apply it to images. In this paper, we further adapt the selective scanning process of Mamba to the visual domain, enhancing its ability to learn features from two-dimensional images by (i) a continuous 2D scanning process that improves spatial continuity by ensuring adjacency of tokens in the scanning sequence, and (ii) direction-aware updating which enables the model to discern the spatial relations of tokens by encoding directional information. Our architecture is designed to be easy to use and easy to scale, formed by stacking identical PlainMamba blocks, resulting in a model with constant width throughout all layers. The architecture is further simplified by removing the need for special tokens. We evaluate PlainMamba on a variety of visual recognition tasks including image classification, semantic segmentation, object detection, and instance segmentation. Our method achieves performance gains over previous non-hierarchical models and is competitive with hierarchical alternatives. For tasks requiring high-resolution inputs, in particular, PlainMamba requires much less computing while maintaining high performance. Code and models are available at https://github.com/ChenhongyiYang/PlainMamba.},
