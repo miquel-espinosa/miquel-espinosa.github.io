@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
   <!-- Replace the content tag with appropriate information -->
-  <meta name="description" content="The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach towards exploring this question.">
+  <meta name="description" content="The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach to answer this question.">
   <meta property="og:title" content="There is no SAMantics! Exploring SAM as a Backbone for Visual Understanding Tasks"/>
-  <meta property="og:description" content="The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach towards exploring this question."/>
+  <meta property="og:description" content="The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach to answer this question."/>
   <meta property="og:url" content="https://miquel-espinosa.github.io/samantics"/>
   <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
   <meta property="og:image" content="static/images/banner.png" />
@@ -15,7 +15,7 @@
 
 
   <meta name="twitter:title" content="There is no SAMantics! Exploring SAM as a Backbone for Visual Understanding Tasks">
-  <meta name="twitter:description" content="The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach towards exploring this question.">
+  <meta name="twitter:description" content="The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach to answer this question.">
   <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
   <meta name="twitter:image" content="static/images/twitter_banner.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -161,7 +161,7 @@
         type="video/mp4">
       </video>
       <h2 class="subtitle has-text-centered">
-        The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach towards exploring this question.
+        The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach to answer this question.
       </h2>
     </div>
   </div>
@@ -176,7 +176,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach towards exploring this question. We firstly quantify SAM's semantic capabilities by comparing base image encoder efficacy under classification tasks, in comparison with established models (CLIP and DINOv2). Our findings reveal a significant lack of semantic discriminability in SAM feature representations, limiting potential for tasks that require class differentiation. This initial result motivates our exploratory study that attempts to enable semantic information via in-context learning with lightweight fine-tuning where we observe that generalisability to unseen classes remains limited. Our observations culminate in the proposal of a training-free approach that leverages DINOv2 features, towards better endowing SAM with semantic understanding and achieving instance-level class differentiation through feature-based similarity. Our study suggests that incorporation of external semantic sources provides a promising direction for the enhancement of SAM's utility with respect to complex visual tasks that require semantic understanding.
+            The Segment Anything Model (SAM) was originally designed for label-agnostic mask generation. Does this model also possess inherent semantic understanding, of value to broader visual tasks? In this work we follow a multi-staged approach to answer this question. We firstly quantify SAM's semantic capabilities by comparing base image encoder efficacy under classification tasks, in comparison with established models (CLIP and DINOv2). Our findings reveal a significant lack of semantic discriminability in SAM feature representations, limiting potential for tasks that require class differentiation. This initial result motivates our exploratory study that attempts to enable semantic information via in-context learning with lightweight fine-tuning where we observe that generalisability to unseen classes remains limited. Our observations culminate in the proposal of a training-free approach that leverages DINOv2 features, towards better endowing SAM with semantic understanding and achieving instance-level class differentiation through feature-based similarity. Our study suggests that incorporation of external semantic sources provides a promising direction for the enhancement of SAM's utility with respect to complex visual tasks that require semantic understanding.
           </p>
         </div>
       </div>
@@ -194,7 +194,7 @@
         <h2 class="title is-3"><span style="background-color: #C9DAF8; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">Quantifying</span> Semantics in SAM</h2>
         <div class="content has-text-justified">
           <p>
-            We benchmark SAM feature representations against popular vision encoders (CLIP and DINOv2) on image classification tasks, measuring the presence of semantics via linear probing on respective features. Despite impressive segmentation abilities, we find SAM lacks discriminative feature quality to enable successful classification, underscoring limited semantic encoding.
+            We benchmark SAM feature representations against popular vision encoders (CLIP and DINOv2) on image classification tasks, measuring the presence of semantics via linear probing on respective features. Despite impressive segmentation abilities, we find SAM lacks discriminative feature quality to enable successful classification, indicating limited semantic encoding.
           </p>
         </div>
 
@@ -325,7 +325,7 @@
         <h3 class="title is-4 mt-6">T-SNE Exploration</h3>
         <div class="content has-text-justified">
           <p>
-            We make use of t-SNE plots to visualise the features, as shown in the figure below. These plots reveal that the class semantic information is not present before the MLP. Instead, class semantics are actually being learned in the MLP layer, therefore overfitting to the classes seen during training. While the MLP layer encodes class information, this semantic structure is absent in the earlier features, highlighting that the semantics that are recovered in the model are specific to the classes we tune on, and that these class-specific cues do not generalise to unseen classes.
+            We make use of T-SNE plots to visualise the features, as shown in the figure below. These plots reveal that the class semantic information is not present before the MLP. Instead, class semantics are actually being learned in the MLP layer, therefore overfitting to the classes seen during training. While the MLP layer encodes class information, this semantic structure is absent in the earlier features, highlighting that the semantics that are recovered in the model are specific to the classes we tune on, and that these class-specific cues do not generalise to unseen classes.
           </p>
         </div>
         <div class="columns is-centered">
@@ -390,8 +390,25 @@
 </section>
 <!-- End Injecting External Semantics Section -->
 
+<!-- Conclusion Section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Conclusion</h2>
+        <div class="content has-text-justified">
+          <p>
+            Our study reveals a significant semantic gap in SAM's feature representations, limiting its utility for tasks that require class differentiation. While SAM's in-context learning approach shows promise, it struggles with generalising to unseen classes. We propose a training-free approach that leverages DINOv2 features to enhance SAM's semantic understanding and enable instance-level class differentiation through feature-based similarity. Our study suggests that incorporating external semantic sources offers a promising direction for the enhancement of SAM's utility with respect to complex visual tasks that require semantic understanding.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Conclusion Section -->
+
 <!--BibTex citation -->
-  <section class="section hero is-light" id="BibTeX">
+  <section class="section hero" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <pre><code>@article{espinosa2024samantics,
