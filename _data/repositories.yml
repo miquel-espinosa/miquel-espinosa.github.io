@@ -6,6 +6,8 @@ github_users:
 github_repos:
   - miquel-espinosa/map-sat
   - ChenhongyiYang/PlainMamba
+  - miquel-espinosa/samantics
+  # - miquel-espinosa/cop-gen-beta
   # - twbs/bootstrap
   # - jekyll/jekyll
   # - jquery/jquery

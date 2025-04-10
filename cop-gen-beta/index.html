@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="COP-GEN-Beta is a novel diffusion model that enables unified representation learning and zero-shot translation across optical, radar and elevation remote sensing data. Using a sequence-based transformer architecture with modality-specific timestep embeddings, it can map between any subset of modalities, generating high-quality samples."/>
+  <meta property="og:title" content="COP-GEN-Beta: Unified Generative Modelling of COPernicus Imagery Thumbnails"/>
+  <meta property="og:description" content="COP-GEN-Beta is a novel diffusion model that enables unified representation learning and zero-shot translation across optical, radar and elevation remote sensing data. Using a sequence-based transformer architecture with modality-specific timestep embeddings, it can map between any subset of modalities, generating high-quality samples."/>
+  <meta property="og:url" content="https://miquel-espinosa.github.io/cop-gen-beta"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/images/banner.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="COP-GEN-Beta: Unified Generative Modelling of COPernicus Imagery Thumbnails">
+  <meta name="twitter:description" content="COP-GEN-Beta is a novel diffusion model that enables unified representation learning and zero-shot translation across optical, radar and elevation remote sensing data. Using a sequence-based transformer architecture with modality-specific timestep embeddings, it can map between any subset of modalities, generating high-quality samples.">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/twitter_banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="COP-GEN-Beta, COPernicus, Generative Modelling, Thumbnails, Remote Sensing, Semantic Understanding">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>COP-GEN-Beta: Unified Generative Modelling of COPernicus Imagery Thumbnails</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  
+  <style>
+    .hero-with-background {
+      position: relative;
+      background-image: url('static/images/unconditional-banner.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+    
+    .hero-with-background::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.4); /* This creates the dimming effect */
+      z-index: 1;
+    }
+    
+    .hero-with-background .hero-body {
+      position: relative;
+      z-index: 2; /* Ensures content appears above the dimming overlay */
+    }
+    
+    .hero-with-background .title,
+    .hero-with-background .subtitle,
+    .hero-with-background .publication-authors {
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Text shadow for better readability */
+    }
+    
+    .hero-with-background .button.is-dark {
+      background-color: rgba(54, 54, 54, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+
+  <section class="hero hero-with-background">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">COP-GEN-Beta</h1>
+            <h2 class="subtitle is-3">Unified Generative Modelling of COPernicus Imagery Thumbnails</h2>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://miquel-espinosa.github.io/" target="_blank">Miguel Espinosa</a><sup>*1,2</sup>,</span>
+                <span class="author-block">
+                  <a href="https://sites.google.com/uniroma1.it/valeriomarsocci" target="_blank">Valerio Marsocci</a><sup>2</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://jiayuru.notion.site/" target="_blank">Yuru Jia</a><sup>3</sup>,
+                    <span class="author-block">
+                      <a href="https://elliotjcrowley.github.io/" target="_blank">Elliot J. Crowley</a><sup>1</sup>
+                    </span>
+                  </span>
+                  <span class="author-block">
+                    <a href="https://mikonvergence.github.io/" target="_blank">Mikolaj Czerkawski</a><sup>4</sup>,
+                  </span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block"><sup>1</sup>University of Edinburgh, <sup>2</sup>European Space Agency (ESA), <sup>3</sup>KU Leuven, <sup>4</sup>Asterisk Labs<br>CVPRW 2025</span>
+                    <span class="eql-cntrb"><small><br><sup>*</sup>First author</small></span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/0000.00000" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                    <!-- Supplementary PDF link -->
+                    <!-- <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span> -->
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/miquel-espinosa/cop-gen-beta" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code (coming soon)</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/0000.00000" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Overview buttons in a single row -->
+              <div class="overview-button-wrapper columns is-centered">
+                <div class="column is-6">
+                  <div style="display: flex; gap: 10px;">
+                    <button id="unconditionalBtn" onclick="showModal('static/images/unconditional.png')" class="button is-normal is-rounded is-dark" style="flex: 1; background-color: #6D9EEB">
+                      <span class="icon">
+                        <i class="fas fa-image"></i>
+                      </span>
+                      <span>Unconditional Generation</span>
+                    </button>
+                    <button id="conditionalBtn" onclick="showModal('static/images/conditional-generation-smaller.png')" class="button is-normal is-rounded is-dark" style="flex: 1; background-color: #6D9EEB">
+                      <span class="icon">
+                        <i class="fas fa-image"></i>
+                      </span>
+                      <span>Conditional Generation</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <!-- End overview buttons -->
+               
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal Image-->
+<div id="imageModal" class="modal">
+  <div class="modal-background" onclick="closeModal()"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img id="modalImage" src="static/images/unconditional.png" alt="Method Overview">
+    </p>
+  </div>
+  <button class="modal-close is-large" aria-label="close" onclick="closeModal()"></button>
+</div>
+<!-- End Modal Image -->
+
+<!-- Teaser image-->
+<section class="hero teaser" style="margin-top: 1rem;">
+  <div class="container is-max-desktop">
+    <div class="hero-body" style="padding-top: 0;">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <img src="static/images/emergent-seasonality.png" alt="Emergent Seasonality" width="75%" style="margin: 0 auto;">
+          <h2 class="subtitle has-text-centered" style="width: 75%; margin: 0 auto;">
+            <b>Figure 1:</b> By training on dense, global coverage COP-GEN-Beta captures a wide and diverse data 
+            distribution of the supported modalities. We observe emergent effects such 
+            as seasonality when sampling multiple images conditioned on the same S1RTC sample.
+            COP-GEN-Beta is capable of synthetising new locations that do not exist,
+            but also it can reimagine existing locations in conditions that were never observed.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End teaser image -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            In remote sensing, multi-modal data from various sensors capturing the same
+            scene offers rich opportunities, but learning a unified representation across
+            these modalities remains a significant challenge. Traditional methods have often
+            been limited to single or dual-modality approaches. In this paper, we introduce COP-GEN-Beta,
+            a generative diffusion model trained on optical, radar, and elevation data from the Major TOM dataset.
+            What sets COP-GEN-Beta apart is its ability to map any subset of modalities to any other,
+            enabling zero-shot modality translation after training. This is achieved through a sequence-based
+            diffusion transformer, where each modality is controlled by its own timestep embedding.
+            We extensively evaluate COP-GEN-Beta on thumbnail images from the Major TOM dataset,
+            demonstrating its effectiveness in generating high-quality samples. Qualitative and
+            quantitative evaluations validate the model's performance, highlighting its potential
+            as a powerful pre-trained model for future remote sensing tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<!-- ARCHITECTURE -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3"><span style="background-color: #C9DAF8; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">COP-GEN-Beta</span></h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce COP-GEN-Beta, a novel diffusion model designed to handle
+            multiple remote sensing modalities. Specifically, COP-GEN-Beta operates
+            on four key EO modalities: Digital Elevation Model (DEM), Sentinel-1 Radar
+            Terrain Corrected (S1 RTC), Sentinel-2 Level 1C (S2 L1C), and Sentinel-2 Level 2A (S2 L2A).
+            Unlike previous approaches, which require separate models for per modality,
+            COP-GEN-Beta learns joint, conditional, and marginal distributions within a unified framework.
+          </p>
+        </div>
+
+        <!-- Single centered image -->
+        <div class="columns is-centered">
+          <div class="column is-12">
+            <figure class="image">
+              <img src="static/images/cop-gen-beta-architecture.png" alt="COP-GEN-Beta Architecture">
+              <figcaption style="font-size: 0.95em">
+                <b>Figure 2:</b> COP-GEN-Beta is the first generative model
+                trained on the joint distribution of Sentinel-2 (both L1C and L2A), Sentinel-1 RTC, and
+                Copernicus GLO-30 DEM data. This is done through (a) sampling a global
+                and dense dataset of these modalities from Major TOM, encoding all images with a
+                pretrained StableDiffusion autoencoder, and (b) training a sequence-based denoising 
+                diffusion model using a transformer backbone, where each modality is supplied with its 
+                designated timestep. This approach makes it possible to (c) generate all modalities based 
+                on any subset thereof that is available.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End ARCHITECTURE Section -->
+
+<!-- Why COP-GEN-Beta Section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><span style="background-color: #FCE5CD; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">Why</span> COP-GEN-Beta?</h2>
+        <div class="content has-text-justified">
+          <p>
+            COP-GEN-Beta introduces several key innovations in multimodal remote sensing:
+          </p>
+          <ul>
+            <li><strong>User-defined flexibility:</strong> Generate any combination of modalities from available ones,
+              eliminating the need for specialized translation models</li>
+            
+            <li><strong>Unified multimodal modeling:</strong> Captures cross-modal relationships through a shared backbone,
+              leveraging correlations between different data types to enhance both representation and generation</li>
+            
+            <li><strong>Scalable architecture:</strong> Transformer-based design allows easy integration of new modalities
+              by simply adding input tokens, with flexible attention mechanisms handling cross-modal interactions</li>
+            
+            <li><strong>Future-proof solution:</strong> Adaptable framework ready to incorporate emerging remote
+              sensing data types and modalities</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Why COP-GEN-Beta Section -->
+
+<!-- Use Cases Section -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><span style="background-color: #D9EAD3; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">Use Cases</span> of COP-GEN-Beta</h2>
+        <div class="content has-text-justified">
+          <p>
+            COP-GEN-Beta's flexible sampling capabilities enable a wide range of downstream applications through various modality translation combinations.
+            By allowing generation of any subset of modalities conditioned on any other subset, our model unlocks numerous practical use cases in
+            remote sensing, from atmospheric correction and DEM generation to dataset expansion. Below we showcase
+            some key applications that demonstrate the model's versatility and potential impact in real-world scenarios.
+          </p>
+        </div>
+
+        <br>
+        <h3 class="title is-4">Conditional Generation</h3>
+
+        <!-- Results Carousel -->
+        <div id="results-carousel-2" class="carousel results-carousel">
+          <div class="item">
+            <img src="static/images/atmospheric-correction.png" alt="Result 1"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 3:</b> COP-GEN-Beta supports translation between processing levels of Sentinel-2,
+              which emulates the official procesor for the L2A level
+              (approximating Bottom-of-Atmosphere based on Top-of Atmosphere input).
+            </h2>
+          </div>
+          <div class="item">
+            <img src="static/images/atmospheric-generation.png" alt="Result 2"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 4:</b> It can also do the opposite and approximate a possible L1C product from an observed L2A observation,
+              which is equivalent to the synthesis of the atmospheric effect.
+            </h2>
+          </div>
+          <div class="item">
+            <img src="static/images/dem-estimation.png" alt="Result 3"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 5:</b> COP-GEN-Beta can map any modality to an elevation model estimate,
+              which can be highly useful for dynamically changing terrains. Here,
+              it is shown how any modality (Sentinel-1 or Sentinel-2) can be used to
+              approximate the elevation, even radiometrically terrain-corrected radar product.
+            </h2>
+          </div>
+        </div>
+
+        <br>
+        <h3 class="title is-4">Looping Generation</h3>
+
+        <div class="content has-text-justified">
+          <p>
+            To analyse the model robustness to generation degradation, we perform a generation chain,
+            starting from a real S2L2A image and iteratively conditioning the model on the previously generated image.
+            For illustrative purposes, we only show a loop between S2L2A and S1RTC modalities repeatedly.
+          </p>
+        </div>
+
+        <div id="results-carousel-2" class="carousel results-carousel">
+          <div class="item">
+            <img src="static/images/spiral-looping.png" alt="Result 1"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 6:</b> We perform a generation chain,
+              starting from a real S2L2A image and iteratively conditioning the
+              model on the previously generated image. For illustrative purposes,
+              we only show a loop between S2L2A and S1RTC modalities repeatedly,
+              but more modalities could have been involved.
+            </h2>
+          </div>
+          <div class="item">
+            <img src="static/images/short-looping.png" alt="Result 2"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 7:</b> We illustrate the iterative process of conditioning the model on its
+              own generated outputs. Starting from a real
+              Sentinel-2 L2A image (left), the model first generates multiple
+              corresponding Sentinel-1 RTC image (middle), which is then used to
+              synthesize a new Sentinel-2 L2A image (right).
+            </h2>
+          </div>
+        </div>
+
+        <br>
+        <h3 class="title is-4">Expanding existing dataset with modality translation</h3>
+
+        <div class="content has-text-justified">
+          <p>
+            To investigate generalisation abilities we condition COP-GEN-Beta on
+            images from the BigEarthNet dataset. Despite differences in processing
+            pipelines between Major TOM thumbnails and BigEarthNet, our model produces
+            reasonable results demonstrating its potential for expanding existing datasets
+            to additional modalities.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-three-fifths">
+            <img src="static/images/bigearthnet.png" alt="Zero-shot results"/>
+            <figcaption style="font-size: 0.95em">
+              <b>Figure 8:</b> COP-GEN-Beta can be used to expand existing datasets containing the supported
+              modalities, such as BigEarthNet, which has been used as a conditioning source
+              for Sentinel-2 L2A data. COP-GEN-Beta is capable of reproducing all remaining
+              modalities despite never observing BigEarthNet samples in the training data.
+            </figcaption>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Use Cases Section -->
+
+<!-- Conclusion Section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Conclusion</h2>
+        <div class="content has-text-justified">
+          <p>
+            We present COP-GEN-Beta, a <strong>transformer-based diffusion
+            model for multi-modal Earth observation imagery</strong> -- the first to learn a joint generative
+            distribution across multiple Earth observation modalities. Through extensive evaluation
+            on Major TOM thumbnails, we demonstrate the model's <strong>ability to generate
+            high-quality paired data conditioned on any subset of modalities</strong>.
+            This work establishes a robust foundation for future developments in Earth observation,
+            paving the way for models that handle original formatting of source data and can easily
+            incorporate new modalities through continual learning approaches.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Conclusion Section -->
+
+<!--BibTex citation -->
+  <section class="section hero" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{espinosa2025copgenbeta,
+        title={COP-GEN-Beta: Unified Generative Modelling of COPernicus Imagery Thumbnails}, 
+        author={Miguel Espinosa and Valerio Marsocci and Yuru Jia and Elliot J. Crowley and Mikolaj Czerkawski},
+        year={2025},
+        institution={University of Edinburgh, European Space Agency, KU Leuven, Asterisk Labs},
+        journal={arXiv},
+        primaryClass={cs.CV},
+        url={https://arxiv.org/abs/0000.00000}
+      }</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer is-light">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+<script>
+// Simple modal functions
+function showModal(imageSrc) {
+  console.log("showModal called with:", imageSrc);
+  document.getElementById('modalImage').src = imageSrc;
+  document.getElementById('imageModal').classList.add('is-active');
+}
+
+function closeModal() {
+  console.log("closeModal called");
+  document.getElementById('imageModal').classList.remove('is-active');
+  document.getElementById('modalImage').classList.remove('zoomed');
+}
+
+// Keyboard handler for ESC key
+document.addEventListener('keydown', function(event) {
+  if (event.code === 'Escape') {
+    closeModal();
+  }
+});
+
+// Zoom functionality 
+document.getElementById('modalImage').addEventListener('click', function(e) {
+  e.stopPropagation(); // Prevent modal from closing
+  
+  if (this.classList.contains('zoomed')) {
+    this.classList.remove('zoomed');
+  } else {
+    // Set zoom origin to click position
+    const rect = this.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    this.style.transformOrigin = `${x}px ${y}px`;
+    this.classList.add('zoomed');
+  }
+});
+</script>
+
+  </body>
+  </html>
