@@ -79,6 +79,16 @@
     .hero-with-background .button.is-dark {
       background-color: rgba(54, 54, 54, 0.8);
     }
+    
+    /* Custom icon for Hugging Face */
+    .fa-huggingface {
+      background-image: url('static/images/huggingface.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+    }
   </style>
 </head>
 <body>
@@ -117,7 +127,7 @@
                     <div class="publication-links">
                          <!-- Arxiv PDF link -->
                       <span class="link-block">
-                        <a href="https://arxiv.org/pdf/0000.00000" target="_blank"
+                        <a href="https://arxiv.org/pdf/2504.08548" target="_blank"
                         class="external-link button is-normal is-rounded is-dark">
                         <span class="icon">
                           <i class="fas fa-file-pdf"></i>
@@ -139,18 +149,40 @@
 
                   <!-- Github link -->
                   <span class="link-block">
-                    <a href="https://github.com/miquel-espinosa/cop-gen-beta" target="_blank"
+                    <a href="https://github.com/miquel-espinosa/COP-GEN-Beta" target="_blank"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fab fa-github"></i>
                     </span>
-                    <span>Code (coming soon)</span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                  <!-- Hugging Face model -->
+                  <span class="link-block">
+                    <a href="https://huggingface.co/mespinosami/COP-GEN-Beta" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fa-huggingface"></i>
+                    </span>
+                    <span>Model</span>
+                  </a>
+                </span>
+
+                  <!-- Hugging Face demo -->
+                  <span class="link-block">
+                    <a href="https://huggingface.co/mespinosami/COP-GEN-Beta" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fa-huggingface"></i>
+                    </span>
+                    <span>Demo</span>
                   </a>
                 </span>
 
                 <!-- ArXiv abstract Link -->
                 <span class="link-block">
-                  <a href="https://arxiv.org/abs/0000.00000" target="_blank"
+                  <a href="https://arxiv.org/abs/2504.08548" target="_blank"
                   class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="ai ai-arxiv"></i>
@@ -460,14 +492,11 @@
   <section class="section hero" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@article{espinosa2025copgenbeta,
-        title={COP-GEN-Beta: Unified Generative Modelling of COPernicus Imagery Thumbnails}, 
-        author={Miguel Espinosa and Valerio Marsocci and Yuru Jia and Elliot J. Crowley and Mikolaj Czerkawski},
-        year={2025},
-        institution={University of Edinburgh, European Space Agency, KU Leuven, Asterisk Labs},
-        journal={arXiv},
-        primaryClass={cs.CV},
-        url={https://arxiv.org/abs/0000.00000}
+      <pre><code>@inproceedings{espinosa2025copgenbeta,
+        title={COP-GEN-Beta: Unified Generative Modelling of COPernicus Imagery Thumbnails},
+        author={Espinosa, Miguel and Marsocci, Valerio and Jia, Yuru and Crowley, Elliot J. and Czerkawski, Mikolaj},
+        booktitle={CVPRW},
+        year={2025}
       }</code></pre>
     </div>
 </section>
