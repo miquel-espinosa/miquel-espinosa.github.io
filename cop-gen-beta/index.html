@@ -89,6 +89,16 @@
       height: 16px;
       display: inline-block;
     }
+
+    /* Custom icon for Hugging Face */
+    .fa-google-colab {
+      background-image: url('static/images/colab.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+    }
   </style>
 </head>
 <body>
@@ -171,7 +181,7 @@
 
                   <!-- Hugging Face demo -->
                   <span class="link-block">
-                    <a href="https://huggingface.co/mespinosami/COP-GEN-Beta" target="_blank"
+                    <a href="https://huggingface.co/spaces/mikonvergence/COP-GEN-Beta" target="_blank"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fa-huggingface"></i>
@@ -188,6 +198,16 @@
                     <i class="ai ai-arxiv"></i>
                   </span>
                   <span>arXiv</span>
+                </a>
+              </span>
+                <!-- Colab Link -->
+                <span class="link-block">
+                  <a href="https://colab.research.google.com/github/miquel-espinosa/COP-GEN-Beta/blob/main/COP_GEN_Beta_inference.ipynb" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fa-google-colab"></i>
+                  </span>
+                  <span>Colab</span>
                 </a>
               </span>
               <!-- Overview buttons in a single row -->
