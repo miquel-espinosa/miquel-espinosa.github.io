@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="Training-free reference-based instance segmentation that stores DINOv2 features in a memory bank and matches them to SAM proposals, reaching state-of-the-art on COCO FSOD, PASCAL VOC few-shot and cross-domain benchmarks without any fine-tuning.">
+  <meta property="og:title" content="No time to train! Training-Free Reference-Based Instance Segmentation"/>
+  <meta property="og:description" content="Training-free reference-based instance segmentation that stores DINOv2 features in a memory bank and matches them to SAM proposals, reaching state-of-the-art on COCO FSOD, PASCAL VOC few-shot and cross-domain benchmarks without any fine-tuning."/>
+  <meta property="og:url" content="https://miquel-espinosa.github.io/samantics"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/images/banner.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="No time to train! Training-Free Reference-Based Instance Segmentation">
+  <meta name="twitter:description" content="Training-free reference-based instance segmentation that stores DINOv2 features in a memory bank and matches them to SAM proposals, reaching SOTA on COCO FSOD, PASCAL VOC few-shot and cross-domain benchmarks without any fine-tuning." >
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/twitter_banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="SAM, SAMantics, Segment Anything Model, semantics, SAM as a backbone, SAM for visual understanding, reference-based instance segmentation, few-shot instance segmentation, training-free instance segmentation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>No time to train! Training-Free Reference-Based Instance Segmentation</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      },
+      options: {
+        processEscapes: true
+      }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">No time to train!</h1>
+            <h2 class="subtitle is-3">Training-Free Reference-Based Instance Segmentation</h2>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://miquel-espinosa.github.io/" target="_blank">Miguel Espinosa</a><sup>*</sup>,</span>
+                <span class="author-block">
+                  <a href="https://chenhongyiyang.com/" target="_blank">Chenhongyi Yang</a><sup>*</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://linusericsson.github.io/" target="_blank">Linus Ericsson</a>,
+                  </span>
+                  <span class="author-block">
+                    <a href="https://smcdonagh.github.io/" target="_blank">Steven McDonagh</a>,
+                  </span>
+                  <span class="author-block">
+                    <a href="https://elliotjcrowley.github.io/" target="_blank">Elliot J. Crowley</a>
+                  </span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">School of Engineering, University of Edinburgh<br>Arxiv 2025</span>
+                    <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/2507.02798" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                    <!-- Supplementary PDF link -->
+                    <!-- <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span> -->
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/miquel-espinosa/no-time-to-train" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2507.02798" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <!-- New overview button below -->
+              <!-- <div class="overview-button-wrapper">
+                <button id="openModalBtn" class="button is-normal is-rounded is-dark" style="width: 50%; background-color: #6D9EEB">
+                  <span class="icon">
+                    <i class="fas fa-image"></i>
+                  </span>
+                  <span>Visualise Overview Figure</span>
+                </button>
+              </div> -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser image-->
+<section class="hero teaser" style="margin-top: 1rem;">
+  <div class="container is-max-desktop">
+    <div class="hero-body" style="padding-top: 0;">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <img src="static/images/cdfsod-results-final-comic-sans.png" alt="Final Results" width="75%" style="margin: 0 auto;">
+          <h2 class="subtitle has-text-centered" style="width: 75%; margin: 0 auto;">
+            <b>Figure 1:</b> Cross-domain 1-shot segmentation results using our training-free method on CD-FSOD benchmark.
+            Our method directly evaluates on diverse datasets without any fine-tuning, using frozen SAMv2 and DINOv2 models.
+            The reference set contains a single example image per class. The model then segments the entire target dataset
+            based on the reference set. Results show: (1) generalization capabilities to out-of-distribution domains (e.g.,
+            underwater images, cartoons, microscopic textures); (2) state-of-the-art performance in 1-shot segmentation
+            without training or domain adaptation; (3) limitations in cases with ambiguous annotations or highly similar
+            classes (e.g., "harbor" vs. "ships" in DIOR).
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End teaser image -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            The performance of image segmentation models has 
+            historically been constrained by the high cost of collecting 
+            large-scale annotated data. 
+            The Segment Anything Model (SAM) alleviates this original problem 
+            through a promptable, semantics-agnostic, segmentation paradigm and yet 
+            still requires manual visual-prompts or complex domain-dependent prompt-generation rules to process a new image.
+            Towards 
+            reducing this new burden, our work investigates the task of 
+            object segmentation when provided with, alternatively, only a small set of reference images. 
+            Our key insight is to leverage strong semantic priors, as learned by foundation models, to identify
+            corresponding regions between a reference and a target image. 
+            We find that correspondences enable automatic generation of instance-level segmentation masks for
+            downstream tasks and 
+            instantiate our ideas via a multi-stage, training-free method incorporating (1) memory bank construction;
+            (2) representation aggregation and (3) semantic-aware feature matching. Our experiments show significant
+            improvements on segmentation metrics, leading to state-of-the-art performance on COCO FSOD (36.8% nAP),
+            PASCAL VOC Few-Shot (71.2% nAP50) and outperforming existing training-free approaches on the
+            Cross-Domain FSOD benchmark (22.4% nAP). 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<!-- Introduction -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><span style="background-color: #C9DAF8; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">Introduction</span></h2>
+        <div class="content has-text-justified">
+          <p>
+            <strong>The problem:</strong>
+            <br>
+            Collecting annotations for segmentation is resource-intensive, and while recent
+            promptable segmentation models like SAM reduce manual effort, they still lack semantic
+            understanding and scalability. Reference-based instance segmentation offers an alternative
+            by using annotated reference images to guide segmentation, but current methods often require
+            fine-tuning and struggle with generalisation. Existing attempts to integrate foundation
+            models such as DINOv2 and SAM are hindered by computational inefficiency and poor
+            performance on complex instance-level tasks.
+            <br>
+            <br>
+            <strong>The solution:</strong>
+            <br>
+            We propose a training-free, three-stage method that
+            <ul>
+              <li>(1) builds a memory bank of features,</li>
+              <li>(2) refines them through aggregation,</li>
+              <li>(3) infers segmentation via semantic-aware feature matching.</li>
+            </ul>
+            This approach achieves strong performance on multiple benchmarks
+            <strong>without fine-tuning</strong>,
+            demonstrating robust generalisation across domains with fixed hyperparameters.
+
+          </p>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Introduction Section -->
+
+<!-- Method Section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><span style="background-color: #FCE5CD; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">Method</span></h2>
+        <div class="content has-text-justified">
+          <p>
+            We employ a memory-based approach to store discriminative representations for object categories.
+          </p>
+          <ol>
+            <li><strong>Constructing a memory bank from reference images:</strong>
+              <details>
+                <summary><u><i style="color: orange;cursor: pointer;">Details</i></u></summary>
+              <p>Given a set of reference images \( \{ I_r^j \}_{j=1}^{N_r} \) and
+                their corresponding instance masks \( \{ M_r^{j,i} \}_{j=1}^{N_r} \)
+                for category \( i \), we extract dense feature maps
+                \( F_r^j \in \mathbb{R}^{H' \times W' \times d} \) using a
+                pretrained frozen encoder
+                \( \mathcal{E} \)<sup><a href="https://github.com/facebookresearch/dinov2" target="_blank">[link]</a></sup>,
+                where \( d \) is the feature dimension and \( H', W' \) denote the
+                spatial resolution of the feature map. The corresponding instance masks
+                \( M_r^{j,i} \in \{0,1\}^{H' \times W'} \) are resized to match this resolution.
+                For each category \( i \), we store the masked features:</p>
+                
+                <p>
+                \[
+                \mathcal{F}_r^{j,i} = F_r^j \odot M_r^{j,i}
+                \]
+                </p>
+                
+                <p>where \( \odot \) denotes element-wise multiplication.
+                  These category-wise feature sets are stored in a memory bank
+                  \( \mathcal{M}_i \), which is synchronised across GPUs to ensure
+                  consistency in distributed settings.</p>
+              </details>
+            </li>
+            
+            <li><strong>Refine representations via two-stage feature aggregation:</strong>
+              <details>
+                <summary><u><i style="color: orange;cursor: pointer;">Details</i></u></summary>
+                <p>To construct category prototypes, we first compute instance-wise feature representations, and then aggregate them into class-wise prototypes:</p>
+                  
+                  <ol type="a" style="margin-left: 2em;">
+                    <li>
+                      <strong>Instance-wise prototypes:</strong><br>
+                      Each instance \( k \) in reference image \( I_r^j \) has its own prototype, computed by averaging the feature embeddings within its corresponding mask:
+                      <p>
+                        \[
+                        P_r^{j,k} = \frac{1}{\| M_r^{j,k} \|_1} \sum_{(u,v)} M_r^{j,k}(u,v) F_r^j(u,v)
+                        \]
+                      </p>
+                      <p>
+                        where \( P_r^{j,k} \in \mathbb{R}^d \) represents the mean feature representation of the \( k \)-th instance in image \( I_r^j \).
+                      </p>
+                    </li>
+                  
+                    <li>
+                      <strong>Class-wise prototype:</strong><br>
+                      We compute the category prototype \( P_i \) by averaging all instance-wise prototypes belonging to the same category \( i \):
+                      <p>
+                        \[
+                        P_i = \frac{1}{N_i} \sum_{j=1}^{N_r} \sum_{k \in \mathcal{K}_i^j} P_r^{j,k},
+                        \]
+                      </p>
+                      <p>
+                        where \( \mathcal{K}_i^j \) is the set of instances in image \( I_r^j \) that belong to category \( i \), and \( N_i = \sum_{j=1}^{N_r} |\mathcal{K}_i^j| \) is the total number of instances belonging to category \( i \). These class-wise prototypes \( P_i \) are stored in the memory bank.
+                      </p>
+                    </li>
+                  </ol>
+                  
+              </details>
+
+            </li>
+            
+            <li><strong>Performing inference on the target images through feature matching and semantic-aware soft merging:</strong>
+              <details>
+                <summary><u><i style="color: orange;cursor: pointer;">Details</i></u></summary>
+                <p>For a target image \( I_t \), we extract dense features \( F_t \in \mathbb{R}^{H' \times W' \times d} \) using the same encoder \( \mathcal{E} \). We use the frozen SAM model to generate \( N_m \) candidate instance masks \( \{ M_t^m \}_{m=1}^{N_m} \), where \( M_t^m \in \{0,1\}^{H' \times W'} \). Each mask \( M_t^m \) is used to compute a feature representation via average pooling and L2 normalisation:</p>
+                  
+                  <p>
+                  \[
+                  P_t^m = \frac{1}{\| M_t^m \|_1} \sum_{(u,v)} M_t^m(u,v) F_t(u,v), \quad \hat{P}_t^m = \frac{P_t^m}{\| P_t^m \|_2}
+                  \]
+                  </p>
+                  
+                  <p>
+                  where \( \hat{P}_t^m \in \mathbb{R}^d \) is the normalised mask feature.
+                  </p>
+                  
+                  <p>To classify each candidate mask, we compute:</p>
+                  
+                  <ol type="a" style="margin-left: 2em;">
+                    <li>
+                      <strong>Feature Matching:</strong><br>
+                      We compute the cosine similarity between \( \hat{P}_t^m \) and category prototypes \( P_i \):
+                      <p>
+                        \[
+                        S_t^m = \max_i \left( \frac{\hat{P}_t^m \cdot P_i}{\| P_i \|_2} \right)
+                        \]
+                      </p>
+                      <p>
+                        which provides the classification score \( S_t^m \) for mask \( M_t^m \).
+                      </p>
+                    </li>
+                  
+                    <li>
+                      <strong>Semantic-Aware Soft Merging:</strong><br>
+                      To handle overlapping predictions, we introduce a novel soft merging strategy. Given two masks \( M_t^m \) and \( M_t^{m'} \) of the same category, we compute their intersection-over-self (IoS):
+                      <p>
+                        \[
+                        \text{IoS}(M_t^m, M_t^{m'}) = \frac{\sum (M_t^m \cap M_t^{m'})}{\sum M_t^m}
+                        \]
+                      </p>
+                      <p>
+                        and weight it by feature similarity:
+                      </p>
+                      <p>
+                        \[
+                        w_{m,m'} = \frac{\hat{P}_t^m \cdot \hat{P}_t^{m'}}{\|\hat{P}_t^{m'}\|_2}
+                        \]
+                      </p>
+                      <p>
+                        The final score for each mask is adjusted using a decay factor:
+                      </p>
+                      <p>
+                        \[
+                        S_t^m \leftarrow S_t^m \cdot \sqrt{(1 - \text{IoS}(M_t^m, M_t^{m'}) w_{m,m'})}
+                        \]
+                      </p>
+                      <p>
+                        reducing redundant detections while preserving distinct instances that may partially overlap. Finally, we rank masks by their adjusted scores, and select the top-\( K \) predictions as the final output.
+                      </p>
+                    </li>
+                  </ol>
+                  
+              </details>
+            </li>
+
+          </ol>
+        </div>
+
+        <!-- Single centered image -->
+        <div class="columns is-centered">
+          <div class="column is-12">
+            <figure class="image">
+              <img src="static/images/training-free-architecture-comic-sans.png" alt="Method Overview">
+              <figcaption style="font-size: 0.95em">
+                <b>Figure 2:</b> Overview of our training-free method for few-shot
+                instance segmentation and object detection. We (1) create a
+                reference memory bank using DINOv2 features from segmented images,
+                (2) aggregate them into class prototypes, and (3) perform inference by matching
+                target image features to the memory bank via semantic-aware soft merging.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Method Section -->
+
+<!-- Results Section -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><span style="background-color: #D9EAD3; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">Results</span></h2>
+        
+        <div class="content has-text-justified">
+          <p>
+            We evaluate our method on three standard few-shot object detection benchmarks:
+            COCO-FSOD, PASCAL VOC, and CD-FSOD.
+            Our training-free approach achieves state-of-the-art performance across all
+            three benchmarks, outperforming both fine-tuned and training-free methods.
+            On COCO-FSOD and PASCAL VOC, we set new state-of-the-art results for novel classes.
+            On CD-FSOD, which tests cross-domain generalization to diverse visual domains
+            like aerial imagery and microscopy, we achieve the best performance among
+            training-free methods while remaining competitive with fine-tuned approaches.
+
+          </p>
+        </div>
+        <br>
+        <h3 class="title is-4">COCO-FSOD Benchmark</h3>
+        <div class="content has-text-justified">
+          <p>
+            The proposed method is evaluated on the COCO-20i dataset under
+            strict few-shot settings (10-shot and 30-shot) using the COCO-FSOD benchmark.
+            It achieves state-of-the-art performance on novel classes—those overlapping
+            with PASCAL VOC categories—despite being completely training-free and
+            outperforming methods that require fine-tuning.
+            Qualitative results, shown in Figure 3, demonstrate strong instance segmentation in crowded
+            scenes with fine-grained semantics and precise localization, aided by a
+            semantic-aware soft merging strategy that reduces duplicate detections and
+            false positives. Failure cases are shown in Figure 12.
+
+          </p>
+        </div>
+        
+        <!-- Single centered image -->
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <figure class="image">
+              <img src="static/images/coco-grid-results.png" alt="Method Overview">
+              <figcaption style="font-size: 0.95em">
+                <b>Figure 3:</b> Qualitative results on the COCO val2017 set under the 10-shot setting,
+                illustrating the method's ability to handle crowded scenes with overlapping instances,
+                fine-grained semantics, and precise localization. The use of semantic-aware soft merging
+                helps reduce duplicate detections and false positives.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        
+        <details open>
+          <summary><u style="color: rgb(72, 167, 0);cursor: pointer;">(Hide / Show) COCO-FSOD Comparison Table</u></summary>
+          <!-- COCO-FSOD comparison table -->
+          <div class="table-container">
+              <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <thead>
+                  <tr>
+                    <th rowspan="2">Method</th>
+                    <th rowspan="2"><small>Ft. on&nbsp;novel</small></th>
+                    <th colspan="3">10-shot</th>
+                    <th colspan="3">30-shot</th>
+                  </tr>
+                  <tr>
+                    <th><small>nAP</small></th>
+                    <th><small>nAP50</small></th>
+                    <th><small>nAP75</small></th>
+                    <th><small>nAP</small></th>
+                    <th><small>nAP50</small></th>
+                    <th><small>nAP75</small></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>TFA</td>
+                    <td>✓</td>
+                    <td>10.0</td><td>19.2</td><td>9.2</td>
+                    <td>13.5</td><td>24.9</td><td>13.2</td>
+                  </tr>
+                  <tr>
+                    <td>FSCE</td>
+                    <td>✓</td>
+                    <td>11.9</td><td>&mdash;</td><td>10.5</td>
+                    <td>16.4</td><td>&mdash;</td><td>16.2</td>
+                  </tr>
+                  <tr>
+                    <td>Retentive&nbsp;RCNN</td>
+                    <td>✓</td>
+                    <td>10.5</td><td>19.5</td><td>9.3</td>
+                    <td>13.8</td><td>22.9</td><td>13.8</td>
+                  </tr>
+                  <tr>
+                    <td>HeteroGraph</td>
+                    <td>✓</td>
+                    <td>11.6</td><td>23.9</td><td>9.8</td>
+                    <td>16.5</td><td>31.9</td><td>15.5</td>
+                  </tr>
+                  <tr>
+                    <td>Meta&nbsp;F.&nbsp;R-CNN</td>
+                    <td>✓</td>
+                    <td>12.7</td><td>25.7</td><td>10.8</td>
+                    <td>16.6</td><td>31.8</td><td>15.8</td>
+                  </tr>
+                  <tr>
+                    <td>LVC</td>
+                    <td>✓</td>
+                    <td>19.0</td><td>34.1</td><td>19.0</td>
+                    <td>26.8</td><td>45.8</td><td>27.5</td>
+                  </tr>
+                  <tr>
+                    <td>C.&nbsp;Transformer</td>
+                    <td>✓</td>
+                    <td>17.1</td><td>30.2</td><td>17.0</td>
+                    <td>21.4</td><td>35.5</td><td>22.1</td>
+                  </tr>
+                  <tr>
+                    <td>NIFF</td>
+                    <td>✓</td>
+                    <td>18.8</td><td>&mdash;</td><td>&mdash;</td>
+                    <td>20.9</td><td>&mdash;</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>DiGeo</td>
+                    <td>✓</td>
+                    <td>10.3</td><td>18.7</td><td>9.9</td>
+                    <td>14.2</td><td>26.2</td><td>14.8</td>
+                  </tr>
+                  <tr>
+                    <td>CD-ViTO&nbsp;(ViT-L)</td>
+                    <td>✓</td>
+                    <td>35.3</td><td>54.9</td><td>37.2</td>
+                    <td>35.9</td><td>54.5</td><td>38.0</td>
+                  </tr>
+
+                  <!-- Divider between "finetune" and "training-free" groups -->
+                  <tr><td colspan="8"></td></tr>
+
+                  <tr>
+                    <td>FSRW</td>
+                    <td>✗</td>
+                    <td>5.6</td><td>12.3</td><td>4.6</td>
+                    <td>9.1</td><td>19.0</td><td>7.6</td>
+                  </tr>
+                  <tr>
+                    <td>Meta&nbsp;R-CNN</td>
+                    <td>✗</td>
+                    <td>6.1</td><td>19.1</td><td>6.6</td>
+                    <td>9.9</td><td>25.3</td><td>10.8</td>
+                  </tr>
+                  <tr>
+                    <td>DE-ViT&nbsp;(ViT-L)</td>
+                    <td>✗</td>
+                    <td>34.0</td><td>53.0</td><td>37.0</td>
+                    <td>34.0</td><td>52.9</td><td>37.2</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Training-free&nbsp;(ours)</strong></td>
+                    <td><strong>✗</strong></td>
+                    <td><strong>36.6</strong></td><td><strong>54.1</strong></td><td><strong>38.3</strong></td>
+                    <td><strong>36.8</strong></td><td><strong>54.5</strong></td><td><strong>38.7</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p class="has-text-centered is-size-6 mt-2">
+                <strong>Table 1:</strong> Comparison of our training-free method against state-of-the-art approaches on the COCO-FSOD benchmark under 10-shot and 30-shot settings.  
+                Our approach achieves state-of-the-art performance without fine-tuning on novel classes (<em>Ft. on novel</em>).  
+                Results are reported in terms of nAP, nAP50, and nAP75 (nAP = mAP for novel classes).  
+                Competing results taken from&nbsp;<sup>[10]</sup>. Segmentation AP is omitted for brevity.
+              </p>
+            </div>
+        </details>
+
+        <br>
+        <h3 class="title is-4">PASCAL VOC Few-Shot Benchmark</h3>
+        <div class="content has-text-justified">
+          <p>
+            The PASCAL-VOC dataset is split into three groups for few-shot evaluation,
+            each containing 15 base and 5 novel classes. Following standard protocol,
+            AP50 is reported on the novel classes. As shown in Table 2, the proposed
+            method outperforms all prior approaches across all splits, achieving
+            state-of-the-art results regardless of whether competing methods use
+            fine-tuning or not.
+
+          </p>
+        </div>
+
+        <details open>
+          <summary><u style="color: rgb(72, 167, 0);cursor: pointer;">(Hide / Show) PASCAL VOC Few-Shot Benchmark Comparison Table</u></summary>
+          <!-- Pascal-VOC few-shot (AP50) comparison table -->
+            <div class="table-container">
+              <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <!-- ===== Header ===== -->
+                <thead>
+                  <tr>
+                    <th rowspan="2">Method</th>
+                    <th rowspan="2"><small>Ft.&nbsp;on&nbsp;novel</small></th>
+
+                    <th colspan="5">Novel&nbsp;Split&nbsp;1</th>
+                    <th colspan="5">Novel&nbsp;Split&nbsp;2</th>
+                    <th colspan="5">Novel&nbsp;Split&nbsp;3</th>
+
+                    <th rowspan="2">Avg</th>
+                  </tr>
+                  <tr>
+                    <!-- Per-shot column labels -->
+                    <th><small>1</small></th><th><small>2</small></th><th><small>3</small></th>
+                    <th><small>5</small></th><th><small>10</small></th>
+
+                    <th><small>1</small></th><th><small>2</small></th><th><small>3</small></th>
+                    <th><small>5</small></th><th><small>10</small></th>
+
+                    <th><small>1</small></th><th><small>2</small></th><th><small>3</small></th>
+                    <th><small>5</small></th><th><small>10</small></th>
+                  </tr>
+                </thead>
+
+                <!-- ===== Body ===== -->
+                <tbody>
+                  <!-- Finetuned on novel classes -->
+                  <tr>
+                    <td>FsDetView</td><td>✓</td>
+                    <td>25.4</td><td>20.4</td><td>37.4</td><td>36.1</td><td>42.3</td>
+                    <td>22.9</td><td>21.7</td><td>22.6</td><td>25.6</td><td>29.2</td>
+                    <td>32.4</td><td>19.0</td><td>29.8</td><td>33.2</td><td>39.8</td>
+                    <td>29.2</td>
+                  </tr>
+                  <tr>
+                    <td>TFA</td><td>✓</td>
+                    <td>39.8</td><td>36.1</td><td>44.7</td><td>55.7</td><td>56.0</td>
+                    <td>23.5</td><td>26.9</td><td>34.1</td><td>35.1</td><td>39.1</td>
+                    <td>30.8</td><td>34.8</td><td>42.8</td><td>49.5</td><td>49.8</td>
+                    <td>39.9</td>
+                  </tr>
+                  <tr>
+                    <td>Retentive&nbsp;RCNN</td><td>✓</td>
+                    <td>42.4</td><td>45.8</td><td>45.9</td><td>53.7</td><td>56.1</td>
+                    <td>21.7</td><td>27.8</td><td>35.2</td><td>37.0</td><td>40.3</td>
+                    <td>30.2</td><td>37.6</td><td>43.0</td><td>49.7</td><td>50.1</td>
+                    <td>41.1</td>
+                  </tr>
+                  <tr>
+                    <td>DiGeo</td><td>✓</td>
+                    <td>37.9</td><td>39.4</td><td>48.5</td><td>58.6</td><td>61.5</td>
+                    <td>26.6</td><td>28.9</td><td>41.9</td><td>42.1</td><td>49.1</td>
+                    <td>30.4</td><td>40.1</td><td>46.9</td><td>52.7</td><td>54.7</td>
+                    <td>44.0</td>
+                  </tr>
+                  <tr>
+                    <td>HeteroGraph</td><td>✓</td>
+                    <td>42.4</td><td>51.9</td><td>55.7</td><td>62.6</td><td>63.4</td>
+                    <td>25.9</td><td>37.8</td><td>46.6</td><td>48.9</td><td>51.1</td>
+                    <td>35.2</td><td>42.9</td><td>47.8</td><td>54.8</td><td>53.5</td>
+                    <td>48.0</td>
+                  </tr>
+                  <tr>
+                    <td>Meta&nbsp;Faster&nbsp;R-CNN</td><td>✓</td>
+                    <td>43.0</td><td>54.5</td><td>60.6</td><td>66.1</td><td>65.4</td>
+                    <td>27.7</td><td>35.5</td><td>46.1</td><td>47.8</td><td>51.4</td>
+                    <td>40.6</td><td>46.4</td><td>53.4</td><td>59.9</td><td>58.6</td>
+                    <td>50.5</td>
+                  </tr>
+                  <tr>
+                    <td>CrossTransformer</td><td>✓</td>
+                    <td>49.9</td><td>57.1</td><td>57.9</td><td>63.2</td><td>67.1</td>
+                    <td>27.6</td><td>34.5</td><td>43.7</td><td>49.2</td><td>51.2</td>
+                    <td>39.5</td><td>54.7</td><td>52.3</td><td>57.0</td><td>58.7</td>
+                    <td>50.9</td>
+                  </tr>
+                  <tr>
+                    <td>LVC</td><td>✓</td>
+                    <td>54.5</td><td>53.2</td><td>58.8</td><td>63.2</td><td>65.7</td>
+                    <td>32.8</td><td>29.2</td><td>50.7</td><td>49.8</td><td>50.6</td>
+                    <td>48.4</td><td>52.7</td><td>55.0</td><td>59.6</td><td>59.6</td>
+                    <td>52.3</td>
+                  </tr>
+                  <tr>
+                    <td>NIFF</td><td>✓</td>
+                    <td>62.8</td><td>67.2</td><td>68.0</td><td>70.3</td><td>68.8</td>
+                    <td>38.4</td><td>42.9</td><td>54.0</td><td>56.4</td><td>54.0</td>
+                    <td>56.4</td><td>62.1</td><td>61.2</td><td>64.1</td><td>63.9</td>
+                    <td>59.4</td>
+                  </tr>
+
+                  <!-- Divider -->
+                  <tr><td colspan="18"></td></tr>
+
+                  <!-- Training-free (no finetuning) -->
+                  <tr>
+                    <td>Multi-Relation&nbsp;Det</td><td>✗</td>
+                    <td>37.8</td><td>43.6</td><td>51.6</td><td>56.5</td><td>58.6</td>
+                    <td>22.5</td><td>30.6</td><td>40.7</td><td>43.1</td><td>47.6</td>
+                    <td>31.0</td><td>37.9</td><td>43.7</td><td>51.3</td><td>49.8</td>
+                    <td>43.1</td>
+                  </tr>
+                  <tr>
+                    <td>DE-ViT&nbsp;(ViT-S/14)</td><td>✗</td>
+                    <td>47.5</td><td>64.5</td><td>57.0</td><td>68.5</td><td>67.3</td>
+                    <td>43.1</td><td>34.1</td><td>49.7</td><td>56.7</td><td>60.8</td>
+                    <td>52.5</td><td>62.1</td><td>60.7</td><td>61.4</td><td>64.5</td>
+                    <td>56.7</td>
+                  </tr>
+                  <tr>
+                    <td>DE-ViT&nbsp;(ViT-B/14)</td><td>✗</td>
+                    <td>56.9</td><td>61.8</td><td>68.0</td><td>73.9</td><td>72.8</td>
+                    <td>45.3</td><td>47.3</td><td>58.2</td><td>59.8</td><td>60.6</td>
+                    <td>58.6</td><td>62.3</td><td>62.7</td><td>64.6</td><td>67.8</td>
+                    <td>61.4</td>
+                  </tr>
+                  <tr>
+                    <td>DE-ViT&nbsp;(ViT-L/14)</td><td>✗</td>
+                    <td>55.4</td><td>56.1</td><td>68.1</td><td>70.9</td><td>71.9</td>
+                    <td>43.0</td><td>39.3</td><td>58.1</td><td>61.6</td><td>63.1</td>
+                    <td>58.2</td><td>64.0</td><td>61.3</td><td>64.2</td><td>67.3</td>
+                    <td>60.2</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Training-free&nbsp;(ours)</strong></td><td><strong>✗</strong></td>
+                    <td><strong>70.8</strong></td><td><strong>72.3</strong></td><td><strong>73.3</strong></td><td><strong>77.2</strong></td><td><strong>79.1</strong></td>
+                    <td><strong>54.5</strong></td><td><strong>67.0</strong></td><td><strong>76.3</strong></td><td><strong>75.9</strong></td><td><strong>78.2</strong></td>
+                    <td><strong>61.1</strong></td><td><strong>67.9</strong></td><td><strong>71.3</strong></td><td><strong>70.8</strong></td><td><strong>72.6</strong></td>
+                    <td><strong>71.2</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p class="has-text-centered is-size-6 mt-2">
+                <strong>Table 2:</strong> AP50 results on the novel classes of the Pascal&nbsp;VOC few-shot benchmark.  
+                Bold numbers indicate state-of-the-art. *NIFF implementation is not publicly available.  
+                Our training-free approach consistently outperforms both finetuned
+                and other training-free methods across all splits.
+              </p>
+            </div>
+        </details>
+
+        <br>
+        <h3 class="title is-4">Cross-Domain Few-Shot Object Detection</h3>
+        <div class="content has-text-justified">
+          <p>
+            The CD-FSOD benchmark evaluates cross-domain few-shot object detection
+            using COCO as the source dataset and six diverse target datasets spanning
+            various visual domains. Unlike most methods that fine-tune on labeled target
+            data, the proposed model is entirely training-free and evaluated directly
+            on all targets. As shown in Table 3, it achieves state-of-the-art
+            performance among training-free methods and remains competitive
+            with fine-tuned approaches, demonstrating strong cross-domain
+            generalization and robustness without retraining.
+          </p>
+        </div>
+
+        <!-- Single centered image -->
+        <div class="columns is-centered">
+          <div class="column is-12">
+            <figure class="image">
+              <img src="static/images/5-shot-cdfsod-results.png" alt="Method Overview">
+              <figcaption style="font-size: 0.95em">
+                <b>Figure 4:</b> Cross-domain 5-shot segmentation results using our training-free method. Our approach evaluates diverse datasets across
+                multiple domains, including aerial, underwater, microscopic, and cartoon imagery, without requiring fine-tuning. Results demonstrate the
+                robustness and generalisability of our method.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <details open>
+          <summary><u style="color: rgb(72, 167, 0);cursor: pointer;">(Hide / Show) Cross-Domain Few-Shot Object Detection Comparison Table</u></summary>
+          <!-- Cross-Domain Few-Shot Object Detection (AP50) comparison table -->
+            <!-- CD-FSOD benchmark (mAP) -->
+            <div class="table-container">
+              <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th><small>Ft.&nbsp;on&nbsp;novel</small></th>
+                    <th>ArT&nbsp;axOr</th>
+                    <th>Clip&nbsp;art1k</th>
+                    <th>DIOR</th>
+                    <th>Deep&nbsp;Fish</th>
+                    <th>NEU&nbsp;DET</th>
+                    <th>UO&nbsp;DD</th>
+                    <th>Avg</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <!-- ========== 1-shot ========== -->
+                  <tr><td colspan="9" class="has-text-centered has-background-light"><strong>1-shot</strong></td></tr>
+                  <tr>
+                    <td>TFA&nbsp;w/cos&nbsp;◦</td><td>✓</td><td>3.1</td><td>&mdash;</td><td>8.0</td><td>&mdash;</td><td>&mdash;</td><td>4.4</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>FSCE&nbsp;◦</td><td>✓</td><td>3.7</td><td>&mdash;</td><td>8.6</td><td>&mdash;</td><td>&mdash;</td><td>3.9</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>DeFRCN&nbsp;◦</td><td>✓</td><td>3.6</td><td>&mdash;</td><td>9.3</td><td>&mdash;</td><td>&mdash;</td><td>4.5</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>Distill-cdfsod&nbsp;◦</td><td>✓</td><td>5.1</td><td>7.6</td><td>10.5</td><td>nan</td><td>nan</td><td>5.9</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>ViTDeT-FT&nbsp;†</td><td>✓</td><td>5.9</td><td>6.1</td><td>12.9</td><td>0.9</td><td>2.4</td><td>4.0</td><td>5.4</td>
+                  </tr>
+                  <tr>
+                    <td>Detic-FT&nbsp;†</td><td>✓</td><td>3.2</td><td>15.1</td><td>4.1</td><td>9.0</td><td>3.8</td><td>4.2</td><td>6.6</td>
+                  </tr>
+                  <tr>
+                    <td>DE-ViT-FT&nbsp;†</td><td>✓</td><td>10.5</td><td>13.0</td><td>14.7</td><td>19.3</td><td>0.6</td><td>2.4</td><td>10.1</td>
+                  </tr>
+                  <tr>
+                    <td>CD-ViTO&nbsp;†</td><td>✓</td><td>21.0</td><td>17.7</td><td>17.8</td><td>20.3</td><td>3.6</td><td>3.1</td><td>13.9</td>
+                  </tr>
+                  <tr>
+                    <td>Meta-RCNN&nbsp;◦</td><td>✗</td><td>2.8</td><td>&mdash;</td><td>7.8</td><td>&mdash;</td><td>&mdash;</td><td>3.6</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>Detic&nbsp;†</td><td>✗</td><td>0.6</td><td>11.4</td><td>0.1</td><td>0.9</td><td>0.0</td><td>0.0</td><td>2.2</td>
+                  </tr>
+                  <tr>
+                    <td>DE-ViT&nbsp;†</td><td>✗</td><td>0.4</td><td>0.5</td><td>2.7</td><td>0.4</td><td>0.4</td><td>1.5</td><td>1.0</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Training-free&nbsp;(ours)</strong></td><td><strong>✗</strong></td>
+                    <td><strong>28.2</strong></td><td><strong>18.9</strong></td><td><strong>14.9</strong></td>
+                    <td><strong>30.5</strong></td><td><strong>5.5</strong></td><td><strong>10.0</strong></td><td><strong>18.0</strong></td>
+                  </tr>
+
+                  <!-- ========== 5-shot ========== -->
+                  <tr><td colspan="9" class="has-text-centered has-background-light"><strong>5-shot</strong></td></tr>
+                  <tr>
+                    <td>TFA&nbsp;w/cos&nbsp;◦</td><td>✓</td><td>8.8</td><td>&mdash;</td><td>18.1</td><td>&mdash;</td><td>&mdash;</td><td>8.7</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>FSCE&nbsp;◦</td><td>✓</td><td>10.2</td><td>&mdash;</td><td>18.7</td><td>&mdash;</td><td>&mdash;</td><td>9.6</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>DeFRCN&nbsp;◦</td><td>✓</td><td>9.9</td><td>&mdash;</td><td>18.9</td><td>&mdash;</td><td>&mdash;</td><td>9.9</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>Distill-cdfsod&nbsp;◦</td><td>✓</td><td>12.5</td><td>23.3</td><td>19.1</td><td>15.5</td><td>16.0</td><td>12.2</td><td>16.4</td>
+                  </tr>
+                  <tr>
+                    <td>ViTDeT-FT&nbsp;†</td><td>✓</td><td>20.9</td><td>23.3</td><td>23.3</td><td>9.0</td><td>13.5</td><td>11.1</td><td>16.9</td>
+                  </tr>
+                  <tr>
+                    <td>Detic-FT&nbsp;†</td><td>✓</td><td>8.7</td><td>20.2</td><td>12.1</td><td>14.3</td><td>14.1</td><td>10.4</td><td>13.3</td>
+                  </tr>
+                  <tr>
+                    <td>DE-ViT-FT&nbsp;†</td><td>✓</td><td>38.0</td><td>38.1</td><td>23.4</td><td>21.2</td><td>7.8</td><td>5.0</td><td>22.3</td>
+                  </tr>
+                  <tr>
+                    <td>CD-ViTO&nbsp;†</td><td>✓</td><td>47.9</td><td>41.1</td><td>26.9</td><td>22.3</td><td>11.4</td><td>6.8</td><td>26.1</td>
+                  </tr>
+                  <tr>
+                    <td>Meta-RCNN&nbsp;◦</td><td>✗</td><td>8.5</td><td>&mdash;</td><td>17.7</td><td>&mdash;</td><td>&mdash;</td><td>8.8</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>Detic&nbsp;†</td><td>✗</td><td>0.6</td><td>11.4</td><td>0.1</td><td>0.9</td><td>0.0</td><td>0.0</td><td>2.2</td>
+                  </tr>
+                  <tr>
+                    <td>DE-ViT&nbsp;†</td><td>✗</td><td>10.1</td><td>5.5</td><td>7.8</td><td>2.5</td><td>1.5</td><td>3.1</td><td>5.1</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Training-free&nbsp;(ours)</strong></td><td><strong>✗</strong></td>
+                    <td><strong>35.7</strong></td><td><strong>24.9</strong></td><td><strong>18.5</strong></td>
+                    <td><strong>29.6</strong></td><td><strong>5.2</strong></td><td><strong>20.2</strong></td><td><strong>22.4</strong></td>
+                  </tr>
+
+                  <!-- ========== 10-shot ========== -->
+                  <tr><td colspan="9" class="has-text-centered has-background-light"><strong>10-shot</strong></td></tr>
+                  <tr>
+                    <td>TFA&nbsp;w/cos&nbsp;◦</td><td>✓</td><td>14.8</td><td>&mdash;</td><td>20.5</td><td>&mdash;</td><td>&mdash;</td><td>11.8</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>FSCE&nbsp;◦</td><td>✓</td><td>15.9</td><td>&mdash;</td><td>21.9</td><td>&mdash;</td><td>&mdash;</td><td>12.0</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>DeFRCN&nbsp;◦</td><td>✓</td><td>15.5</td><td>&mdash;</td><td>22.9</td><td>&mdash;</td><td>&mdash;</td><td>12.1</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>Distill-cdfsod&nbsp;◦</td><td>✓</td><td>18.1</td><td>27.3</td><td>26.5</td><td>15.5</td><td>21.1</td><td>14.5</td><td>20.5</td>
+                  </tr>
+                  <tr>
+                    <td>ViTDeT-FT&nbsp;†</td><td>✓</td><td>23.4</td><td>25.6</td><td>29.4</td><td>6.5</td><td>15.8</td><td>15.6</td><td>19.4</td>
+                  </tr>
+                  <tr>
+                    <td>Detic-FT&nbsp;†</td><td>✓</td><td>12.0</td><td>22.3</td><td>15.4</td><td>17.9</td><td>16.8</td><td>14.4</td><td>16.5</td>
+                  </tr>
+                  <tr>
+                    <td>DE-ViT-FT&nbsp;†</td><td>✓</td><td>49.2</td><td>40.8</td><td>25.6</td><td>21.3</td><td>8.8</td><td>5.4</td><td>25.2</td>
+                  </tr>
+                  <tr>
+                    <td>CD-ViTO&nbsp;†</td><td>✓</td><td>60.5</td><td>44.3</td><td>30.8</td><td>22.3</td><td>12.8</td><td>7.0</td><td>29.6</td>
+                  </tr>
+                  <tr>
+                    <td>Meta-RCNN&nbsp;◦</td><td>✗</td><td>14.0</td><td>&mdash;</td><td><strong>20.6</strong></td><td>&mdash;</td><td>&mdash;</td><td>11.2</td><td>&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td>Detic&nbsp;†</td><td>✗</td><td>0.6</td><td>11.4</td><td>0.1</td><td>0.9</td><td>0.0</td><td>0.0</td><td>2.2</td>
+                  </tr>
+                  <tr>
+                    <td>DE-ViT&nbsp;†</td><td>✗</td><td>9.2</td><td>11.0</td><td>8.4</td><td>2.1</td><td>1.8</td><td>3.1</td><td>5.9</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Training-free&nbsp;(ours)</strong></td><td><strong>✗</strong></td>
+                    <td><strong>35.0</strong></td><td><strong>25.9</strong></td><td>16.4</td>
+                    <td><strong>29.6</strong></td><td><strong>5.5</strong></td><td><strong>16.0</strong></td><td><strong>21.4</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p class="has-text-centered is-size-6 mt-2">
+                <strong>Table 3:</strong> Performance comparison (mAP) on the CD-FSOD benchmark.  
+                The second column indicates whether methods fine-tune on novel classes.  
+                ◦ values come from Distill-cdfsod; † values from CD-ViTO.  
+                Bold denotes best performance.
+              </p>
+            </div>
+        </details>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><span style="background-color: #ded3ea; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">Ablations</span></h2>
+                
+        <br>
+        <h3 class="title is-4">Variance in reference set</h3>
+        <div class="content has-text-justified">
+          <p>
+            Performance varies with the choice of reference images, as results depend on their quality.
+            To measure this, the method was evaluated on COCO-20i using different random seeds.
+            Figure 4 shows that variance decreases with more reference images—higher n-shot
+            settings yield lower standard deviations. While 1-3 shots show greater sensitivity
+            to reference selection, 5+ shots offer stable results. This suggests that certain
+            reference images are more effective, and identifying optimal reference sets is a
+            promising direction for future work.
+          </p>
+        </div>
+
+        <!-- Single centered image -->
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <figure class="image">
+              <img src="static/images/ablation_std.png" alt="Method Overview">
+              <figcaption style="font-size: 0.95em">
+                <b>Figure 2:</b> Figure 4 illustrates performance variance on the COCO-20i
+                benchmark across different n-shot settings, showing that lower shot counts
+                (1-3 shots) lead to higher variability due to reliance on reference image
+                selection. As the number of shots increases, variance decreases,
+                indicating the robustness of the training-free method to reference set
+                changes.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <br>
+        <h3 class="title is-4">Efficiency</h3>
+        <div class="content has-text-justified">
+          <p>
+            The proposed training-free pipeline is lightweight and efficient:
+            <ul>
+              <li>memory bank construction is done once at 0.1 seconds per image</li>
+              <li>semantic matching is fast at 0.0003 seconds per image using parallel cosine similarity</li>
+              <li>soft merging runs at 0.006 seconds per image via a parallel NMS implementation</li>
+            </ul>
+            As shown in Table 4, the method outperforms Matcher and accelerates SAM's automatic
+            mask generation by 3x through optimized point sampling,
+            faster mask filtering, and reduced post-processing.
+          </p>
+          
+          <details open>
+            <summary><u style="color: rgb(100, 0, 167);cursor: pointer;">(Hide / Show) Efficiency Comparison Table</u></summary>
+              <div class="table-container">
+                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Time (sec/img)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Matcher&nbsp;[45]</td>
+                      <td>120.014</td>
+                    </tr>
+                    <tr>
+                      <td>Training-free&nbsp;(ours)&nbsp;with&nbsp;SAM&nbsp;AMG</td>
+                      <td>3.5092</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Training-free&nbsp;(ours)</strong></td>
+                      <td><strong>0.9292</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="has-text-centered is-size-6 mt-2">
+                  <strong>Table 4:</strong> Time to process an image on 20 reference classes with A100.
+                </p>
+              </div>
+          </details>
+          
+        </div>
+
+
+        <br>
+        <h3 class="title is-4">Aggregation strategies</h3>
+        <div class="content has-text-justified">
+          <p>
+            Table 5 highlights the effectiveness of the proposed semantic-aware soft-merging strategy,
+            which outperforms other aggregation variants like covariance similarity, instance softmax,
+            score decay, iterative mask refinement, and attention-guided global averaging.
+          </p>
+
+          <details open>
+            <summary><u style="color: rgb(100, 0, 167);cursor: pointer;">(Hide / Show) Aggregation Strategy Table</u></summary>
+              <div class="table-container">
+                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                  <thead>
+                    <tr>
+                      <th>Aggregation strategy</th>
+                      <th>10-shot nAP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Hard-merging (hard threshold of 1 IoS)</td>
+                      <td>31.2</td>
+                    </tr>
+                    <tr>
+                      <td>Soft-merging (without semantics)</td>
+                      <td>35.7</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Soft-merging (with semantics)</strong></td>
+                      <td><strong>36.6</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="has-text-centered is-size-6 mt-2">
+                  <strong>Table 5:</strong> Ablation on aggregation strategies.
+                </p>
+              </div>
+          </details>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><span style="background-color: #ead3e0; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">Visualisations</span></h2>
+        
+        <br>
+        <h3 class="title is-4">CD-FSOD</h3>
+        <div class="content has-text-justified">
+          <p>
+            We provide more visualisations on the different datasets in the CD-FSOD benchmark.
+          </p>
+        </div>
+        
+        <details>
+          <summary><u style="color: rgb(182, 18, 152);cursor: pointer;">(Hide / Show) CD-FSOD Visualisations</u></summary>
+          <div class="columns is-centered">
+            <div class="column is-12">
+              <figure class="image">
+                <img src="static/images/dior-grid-results.png" alt="Method Overview">
+                <figcaption style="font-size: 0.95em">
+                  <b>Figure 6:</b> 5-shot results on the DIOR dataset.
+                </figcaption>
+              </figure>
+              <br>
+              <figure class="image">
+                <img src="static/images/clipart-grid-results.png" alt="Method Overview">
+                <figcaption style="font-size: 0.95em">
+                  <b>Figure 7:</b> 5-shot results on the CLIPART dataset.
+                </figcaption>
+              </figure>
+              <br>
+              <figure class="image">
+                <img src="static/images/artaxor-grid-results.png" alt="Method Overview">
+                <figcaption style="font-size: 0.95em">
+                  <b>Figure 8:</b> 5-shot results on the ARTARAXOR dataset.
+                </figcaption>
+              </figure>
+              <br>
+              <figure class="image">
+                <img src="static/images/fish-grid-results.png" alt="Method Overview">
+                <figcaption style="font-size: 0.95em">
+                  <b>Figure 9:</b> 5-shot results on the FISH dataset.
+                </figcaption>
+              </figure>
+              <br>
+              <figure class="image">
+                <img src="static/images/neu-det-grid-results.png" alt="Method Overview">
+                <figcaption style="font-size: 0.95em">
+                  <b>Figure 10:</b> 5-shot results on the NEU-DET dataset.
+                </figcaption>
+              </figure>
+              <br>
+              <figure class="image">
+                <img src="static/images/uodd-grid-results.png" alt="Method Overview">
+                <figcaption style="font-size: 0.95em">
+                  <b>Figure 11:</b> 5-shot results on the UODD dataset.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </details>
+        
+        <br>
+        <h3 class="title is-4">Failure cases</h3>
+        <div class="content has-text-justified">
+          <p>
+            We provide visualisations of some of the failure cases for COCO-FSOD dataset.
+          </p>
+        </div>
+
+
+        <details>
+          <summary><u style="color: rgb(182, 18, 152);cursor: pointer;">(Hide / Show) CD-FSOD Visualisations</u></summary>
+          <div class="columns is-centered">
+            <div class="column is-8">
+              <figure class="image">
+                <img src="static/images/failure-results.png" alt="Method Overview">
+                <figcaption style="font-size: 0.95em">
+                  <b>Figure 12:</b> We show failure cases on the COCO val2017 set under the 10-shot setting.
+                  The method sometimes confuses semantically similar classes (e.g., bread vs. hot dog,
+                  armchair vs. couch), misses small or fine objects, and struggles with complete
+                  instance detection in highly crowded scenes.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </details>
+
+      
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Conclusion Section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Conclusion</h2>
+        <div class="content has-text-justified">
+          <p>
+            This work presents a novel <strong>training-free few-shot instance segmentation method</strong> that combines SAM's
+            mask proposals with DINOv2's semantic features. The approach builds a reference-based memory bank,
+            refines features through aggregation, and classifies new instances using cosine similarity and
+            semantic-aware soft merging. It achieves state-of-the-art results on COCO-FSOD, PASCAL VOC,
+            and CD-FSOD without any fine-tuning, and shows potential for semantic segmentation as well.
+            Future directions include learning to select optimal reference images, improving DINOv2's
+            feature localization, and exploring lightweight fine-tuning to enhance the memory bank.
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Conclusion Section -->
+
+<!--BibTex citation -->
+  <section class="section hero" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{espinosa2025notimetotrain,
+        title={No time to train! Training-Free Reference-Based Instance Segmentation},
+        author={Miguel Espinosa and Chenhongyi Yang and Linus Ericsson and Steven McDonagh and Elliot J. Crowley},
+        year={2025}
+        journal={arXiv},
+        primaryclass={cs.CV},
+        url={https://arxiv.org/abs/2507.01300}
+      }</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer is-light">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+<!-- End of Statcounter Code -->
+
+  </body>
+  </html>
