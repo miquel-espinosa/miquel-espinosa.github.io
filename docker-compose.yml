@@ -8,3 +8,21 @@ services:
       - 8080:8080
     volumes:
       - .:/srv/jekyll
+    develop:
+      watch:
+        # Sync all source files (html, md, scss, images, etc.)
+        - action: sync
+          path: .
+          target: /srv/jekyll
+          ignore:
+            - .git/
+            - _site/
+            - .jekyll-cache/
+            - .sass-cache/
+            - node_modules/
+            - "*.log"
+        # Rebuild container when config or Gemfile changes
+        - action: rebuild
+          path: _config.yml
+        - action: rebuild
+          path: Gemfile
