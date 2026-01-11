@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners -->
+  <meta name="description" content="COP-GEN is a latent diffusion transformer for Copernicus Earth observation data that enables stochastic multi-modal generation. Unlike deterministic models, COP-GEN captures the full diversity of physically plausible outputs for any-to-any modality translation."/>
+  <meta property="og:title" content="COP-GEN: Latent Diffusion Transformer for Copernicus Earth Observation Data"/>
+  <meta property="og:description" content="COP-GEN is a latent diffusion transformer for Copernicus Earth observation data that enables stochastic multi-modal generation. Unlike deterministic models, COP-GEN captures the full diversity of physically plausible outputs."/>
+  <meta property="og:url" content="https://miquel-espinosa.github.io/cop-gen"/>
+  <meta property="og:image" content="static/images/banner.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <meta name="twitter:title" content="COP-GEN: Latent Diffusion Transformer for Copernicus Earth Observation Data">
+  <meta name="twitter:description" content="COP-GEN is a latent diffusion transformer for Copernicus Earth observation data that enables stochastic multi-modal generation.">
+  <meta name="twitter:image" content="static/images/twitter_banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="COP-GEN, Copernicus, Diffusion Transformer, Earth Observation, Generative Model, Multi-modal, Stochastic Generation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>COP-GEN: Latent Diffusion Transformer for Copernicus Earth Observation Data</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  
+  <style>
+    .hero-with-background {
+      position: relative;
+      background-image: url('static/images/banner.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+    
+    .hero-with-background::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+    
+    .hero-with-background .hero-body {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-with-background .title,
+    .hero-with-background .subtitle,
+    .hero-with-background .publication-authors {
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    }
+    
+    .hero-with-background .button.is-dark {
+      background-color: rgba(54, 54, 54, 0.8);
+    }
+    
+    .fa-huggingface {
+      background-image: url('static/images/huggingface.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+    }
+
+    .highlight-box {
+      background-color: #E8F4E8;
+      border-left: 4px solid #4CAF50;
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .model-card {
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .model-card.stochastic {
+      background-color: #E3F2FD;
+      border: 2px solid #2196F3;
+    }
+
+    .model-card.deterministic {
+      background-color: #FFF3E0;
+      border: 2px solid #FF9800;
+    }
+
+    .key-insight {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+
+    .key-insight strong {
+      font-size: 1.1em;
+    }
+
+    /* Table styling */
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9em;
+    }
+
+    .results-table th,
+    .results-table td {
+      padding: 0.3rem 0.5rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      line-height: 1.2;
+    }
+
+    .results-table th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    .results-table tr:hover {
+      background-color: #fafafa;
+    }
+
+    .results-table .target-cell {
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .results-table .metric-cell {
+      text-align: left;
+    }
+
+    .results-table .best {
+      font-weight: 700;
+      color: #2E7D32;
+    }
+
+    .results-table .section-header td {
+      background-color: #f9f9f9;
+      border-top: 2px solid #ddd;
+    }
+
+    .table-caption {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 0.5rem;
+      text-align: left;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+
+    .arrow-down::after {
+      content: " ↓";
+      font-size: 0.8em;
+    }
+
+    .arrow-up::after {
+      content: " ↑";
+      font-size: 0.8em;
+    }
+
+    /* Fix for result images */
+    .result-figure {
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .result-figure img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .result-figure figcaption {
+      font-size: 0.95em;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero hero-with-background">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">COP-GEN</h1>
+            <h2 class="subtitle is-3">Latent Diffusion Transformer for Copernicus Earth Observation Data</h2>
+            <h3 class="subtitle is-5" style="margin-top: -0.5rem;">Generation Stochastic by Design</h3>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://miquel-espinosa.github.io/" target="_blank">Miguel Espinosa</a><sup>*1,2</sup>,</span>
+              <span class="author-block">
+                <a href="#" target="_blank">Author 2</a><sup>2</sup>,</span>
+              <span class="author-block">
+                <a href="#" target="_blank">Author 3</a><sup>3</sup>,</span>
+              <span class="author-block">
+                <a href="#" target="_blank">Author 4</a><sup>4</sup>,</span>
+              <span class="author-block">
+                <a href="https://mikonvergence.github.io/" target="_blank">Mikolaj Czerkawski</a><sup>5</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>University of Edinburgh, <sup>2</sup>European Space Agency (ESA), <sup>3</sup>Institution 3, <sup>4</sup>Institution 4, <sup>5</sup>Asterisk Labs<br>2025</span>
+              <span class="eql-cntrb"><small><br><sup>*</sup>First author</small></span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- Arxiv PDF link -->
+                <span class="link-block">
+                  <a href="#" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <!-- Github link -->
+              <span class="link-block">
+                <a href="#" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Code</span>
+              </a>
+            </span>
+
+              <!-- Hugging Face model -->
+              <span class="link-block">
+                <a href="#" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fa-huggingface"></i>
+                </span>
+                <span>Model</span>
+              </a>
+            </span>
+
+              <!-- Hugging Face demo -->
+              <span class="link-block">
+                <a href="#" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fa-huggingface"></i>
+                </span>
+                <span>Demo</span>
+              </a>
+            </span>
+
+            <!-- ArXiv abstract Link -->
+            <span class="link-block">
+              <a href="#" target="_blank"
+              class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <i class="ai ai-arxiv"></i>
+              </span>
+              <span>arXiv</span>
+            </a>
+          </span>
+               
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Teaser: Key Figure showing diversity -->
+<section class="hero teaser" style="margin-top: 1rem;">
+  <div class="container is-max-desktop">
+    <div class="hero-body" style="padding-top: 0;">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <img src="static/images/fig1-diversity.png" alt="COP-GEN generates diverse outputs" style="max-width: 100%; margin: 0 auto;">
+          <h2 class="subtitle has-text-centered" style="max-width: 90%; margin: 1rem auto 0;">
+            <b>Figure 1:</b> Conditional generation of Sentinel-2 L2A imagery from DEM and LULC inputs. 
+            <b>COP-GEN</b> produces <b>diverse and physically consistent outputs</b>, demonstrating variability 
+            in spectral appearance, illumination, and atmospheric conditions while preserving topographic 
+            and land-cover constraints. This highlights the model's ability to capture <b>one-to-many 
+            relationships</b> inherent in multimodal Earth Observation.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            The domain of Earth observation is home to hundreds of petabytes of observational data 
+            from a plethora of diverse sensing instruments. Naturally, conditional mappings between 
+            subsets of available sensors are useful for interpreting the data. However, these 
+            conditional mappings are generally <b>not injective</b> and should be parameterised as 
+            <b>data distributions</b>.
+          </p>
+          <p>
+            <b>COP-GEN</b> is the first generative model for Earth observation that can approximate 
+            these multi-modal distributions owing to its <b>latent diffusion transformer architecture</b>. 
+            Consequently, unlike its state-of-the-art counterparts, COP-GEN can generate highly diverse 
+            distributions that represent the diversity of the underlying data more faithfully.
+          </p>
+          <div class="key-insight">
+            <strong>🎯 Key Insight:</strong> Cross-modal mappings in Earth observation are inherently 
+            <em>one-to-many</em>. A given terrain or land cover can correspond to many physically 
+            plausible optical, radar, or atmospheric realisations. COP-GEN captures this full distribution.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stochastic vs Deterministic Comparison -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">
+          <span style="background-color: #E8F4E8; color: #2E7D32; padding: 0.2em 0.4em; border-radius: 0.3em">Stochastic</span> 
+          vs 
+          <span style="background-color: #FFF3E0; color: #E65100; padding: 0.2em 0.4em; border-radius: 0.3em">Deterministic</span>
+        </h2>
+        <div class="content has-text-justified">
+          <p>
+            Existing multimodal Earth observation models are typically <b>deterministic</b> — given the 
+            same input conditions, they always produce the same output. This forces models to regress 
+            toward a <b>conditional mean</b>, producing blurry, texture-less predictions that don't 
+            capture the true variability of Earth's surface.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-10">
+            <figure class="result-figure">
+              <img src="static/images/fig3-latlon-distribution.png" alt="COP-GEN vs TerraMind lat-lon distribution">
+              <figcaption>
+                <b>Figure 2:</b> Geospatial distribution analysis. Given only DEM and LULC inputs, 
+                we predict latitude-longitude coordinates (n=50 runs). <b style="color: #FF9800;">TerraMind</b> 
+                (deterministic) collapses to a single mode, whereas <b style="color: #4CAF50;">COP-GEN</b> 
+                (stochastic) predicts a distribution of plausible locations sharing similar topographic 
+                and biome characteristics.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Architecture -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3"><span style="background-color: #C9DAF8; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">COP-GEN</span> Architecture</h2>
+        <div class="content has-text-justified">
+          <p>
+            COP-GEN is a unified multimodal generative model that combines modality-specific 
+            latent encoders with a shared transformer-based diffusion backbone. It operates on 
+            <b>six modalities</b> at their <b>native resolutions</b>:
+          </p>
+          <ul>
+            <li><b>Sentinel-2 L2A & L1C</b> — Multi-spectral optical imagery (10m, 20m, 60m bands)</li>
+            <li><b>Sentinel-1 RTC</b> — Radar backscatter (10m)</li>
+            <li><b>Digital Elevation Model (DEM)</b> — Terrain elevation (30m)</li>
+            <li><b>Land Use / Land Cover (LULC)</b> — Semantic classes (10m)</li>
+            <li><b>Timestamp & Geolocation</b> — Temporal and spatial context</li>
+          </ul>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-12">
+            <figure class="result-figure">
+              <img src="static/images/fig2-architecture.png" alt="COP-GEN Architecture">
+              <figcaption>
+                <b>Figure 3:</b> COP-GEN architecture. Each modality is encoded by a trained VAE 
+                into latent tokens, then processed jointly by a U-ViT diffusion backbone with 
+                modality-specific timestep embeddings. This enables flexible any-to-any conditional 
+                generation without retraining.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Features -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><span style="background-color: #FCE5CD; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">Why</span> COP-GEN?</h2>
+        <div class="content has-text-justified">
+          <ul>
+            <li><strong>Stochastic by design:</strong> Captures the full distribution of physically 
+              plausible outputs, not just the conditional mean</li>
+            
+            <li><strong>Any-to-any generation:</strong> Generate any subset of modalities conditioned 
+              on any other subset — zero-shot modality translation without task-specific retraining</li>
+            
+            <li><strong>Native resolutions:</strong> Each modality is processed at its original 
+              spatial resolution, preserving physical structure without aggressive resampling</li>
+            
+            <li><strong>Unified architecture:</strong> Single transformer backbone handles all 
+              modalities through a shared token sequence with cross-modal attention</li>
+            
+            <li><strong>Calibrated uncertainty:</strong> Output variance naturally narrows as 
+              conditioning becomes more informative</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Results Section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3"><span style="background-color: #D9EAD3; color: #363636; padding: 0.2em 0.4em; border-radius: 0.3em">Results</span></h2>
+        
+        <!-- Qualitative Results -->
+        <h2 class="title is-4" style="margin-top: 2rem; border-bottom: 2px solid #4CAF50; padding-bottom: 0.5rem;">
+          <span style="color: #2E7D32;">📊</span> Qualitative Results
+        </h2>
+
+        <h3 class="title is-5" style="margin-top: 1.5rem;">Distribution Narrowing Under Increased Conditioning</h3>
+        <div class="content has-text-justified">
+          <p>
+            As more conditioning modalities are provided, COP-GEN appropriately <b>narrows its 
+            output distribution</b>. Starting from DEM-only conditioning, we incrementally add 
+            LULC, S1 RTC, timestamps, and geolocation. The generated spectral distributions 
+            systematically converge toward the ground truth.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-10">
+            <figure class="result-figure">
+              <img src="static/images/fig4-distribution-narrowing.png" alt="Distribution narrowing">
+              <figcaption>
+                <b>Figure 4:</b> Effect of progressively increasing input conditioning on generation 
+                quality. As additional modalities are provided, generated samples better align with 
+                the ground-truth distribution. Even under sparse conditioning, COP-GEN covers the 
+                true reflectance range without collapsing prematurely.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <h3 class="title is-5" style="margin-top: 2rem;">Spectral Fidelity Across Land-Cover Classes</h3>
+        <div class="content has-text-justified">
+          <p>
+            COP-GEN learns physically meaningful spectral relationships. Per-pixel spectral 
+            responses closely match the characteristic signatures of different land-cover types 
+            across all Sentinel-2 bands.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-10">
+            <figure class="result-figure">
+              <img src="static/images/fig5-spectral-profiles.png" alt="Spectral profiles by class">
+              <figcaption>
+                <b>Figure 5:</b> Per-pixel spectral reflectance profiles across LULC classes. 
+                COP-GEN closely matches the characteristic Sentinel-2 band responses of vegetation, 
+                bare soil, water, built-up areas, demonstrating physically grounded generation.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <h3 class="title is-5" style="margin-top: 2rem;">Band Infilling</h3>
+        <div class="content has-text-justified">
+          <p>
+            COP-GEN can also perform <b>band infilling</b> — generating missing spectral bands 
+            given a subset of available bands. This is useful for completing incomplete observations 
+            or synthesizing bands that were not captured by the sensor.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-10">
+            <figure class="result-figure">
+              <img src="static/images/fig6-band-infilling.png" alt="Band infilling">
+              <figcaption>
+                <b>Figure 6:</b> Band infilling experiment. Given visible bands and infrared, 
+                COP-GEN generates the remaining spectral bands, demonstrating its ability to 
+                learn cross-band dependencies and complete partial observations.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Conditional Generation Gallery -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-5">Conditional Generation Gallery</h3>
+        <div class="content has-text-justified">
+          <p>
+            Additional examples of DEM + LULC → Sentinel-2 L2A generation, demonstrating 
+            COP-GEN's ability to produce diverse, high-quality outputs across different 
+            geographic regions and land-cover types.
+          </p>
+        </div>
+
+        <div id="results-carousel-2" class="carousel results-carousel">
+          <div class="item">
+            <img src="static/images/conditional-examples-1.png" alt="Conditional generation examples"/>
+            <h2 class="subtitle has-text-centered">
+              Various geographic tiles showing COP-GEN's diverse conditional generation 
+              compared to TerraMind's collapsed outputs.
+            </h2>
+          </div>
+          <div class="item">
+            <img src="static/images/conditional-examples-2.png" alt="More conditional generation examples"/>
+            <h2 class="subtitle has-text-centered">
+              Additional examples across different biomes and terrain types.
+            </h2>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quantitative Results -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-4" style="border-bottom: 2px solid #2196F3; padding-bottom: 0.5rem;">
+          <span style="color: #1565C0;">📈</span> Quantitative Results
+        </h2>
+
+        <div class="content has-text-justified" style="margin-top: 1.5rem;">
+          <p>
+            We adopt a <b>Peak-Capability (oracle) evaluation protocol</b>: for each test tile, 
+            we generate multiple independent samples and report the best-matching generation. 
+            This isolates the model's representational capacity from stochastic variance and 
+            answers: <em>does the model's learned distribution contain high-fidelity realisations 
+            consistent with the ground truth?</em>
+          </p>
+        </div>
+
+        <!-- Table 3: Peak Performance -->
+        <h3 class="title is-5" style="margin-top: 2rem;">Peak Capability Analysis</h3>
+        <div class="table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th rowspan="2">Target</th>
+                <th rowspan="2">Metric</th>
+                <th colspan="2">Peak perf. (Best per Tile)</th>
+              </tr>
+              <tr>
+                <th>COP-GEN</th>
+                <th>TerraMind</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- DEM -->
+              <tr>
+                <td rowspan="2" class="target-cell"><b>DEM</b></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">26.80</td>
+                <td>145.62</td>
+              </tr>
+              <tr>
+                <td class="metric-cell">SSIM <span class="arrow-up"></span></td>
+                <td class="best">0.45</td>
+                <td>0.44</td>
+              </tr>
+              <!-- LULC -->
+              <tr>
+                <td rowspan="2" class="target-cell"><b>LULC</b></td>
+                <td class="metric-cell">Top-1 <span class="arrow-up"></span></td>
+                <td class="best">0.84</td>
+                <td>0.80</td>
+              </tr>
+              <tr>
+                <td class="metric-cell">mIoU <span class="arrow-up"></span></td>
+                <td>0.42</td>
+                <td class="best">0.55</td>
+              </tr>
+              <!-- S1RTC -->
+              <tr>
+                <td rowspan="2" class="target-cell"><b>S1RTC</b></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">2.63</td>
+                <td>2.64</td>
+              </tr>
+              <tr>
+                <td class="metric-cell">PSNR <span class="arrow-up"></span></td>
+                <td>16.83</td>
+                <td class="best">19.65</td>
+              </tr>
+              <!-- S2L1C -->
+              <tr>
+                <td rowspan="2" class="target-cell"><b>S2L1C</b></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.02</td>
+                <td>0.11</td>
+              </tr>
+              <tr>
+                <td class="metric-cell">PSNR <span class="arrow-up"></span></td>
+                <td class="best">21.16</td>
+                <td>12.77</td>
+              </tr>
+              <!-- S2L1C† -->
+              <tr>
+                <td rowspan="2" class="target-cell"><b>S2L1C<sup>†</sup></b></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.05</td>
+                <td>0.12</td>
+              </tr>
+              <tr>
+                <td class="metric-cell">PSNR <span class="arrow-up"></span></td>
+                <td class="best">13.92</td>
+                <td>12.68</td>
+              </tr>
+              <!-- S2L2A -->
+              <tr>
+                <td rowspan="2" class="target-cell"><b>S2L2A</b></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.02</td>
+                <td>0.10</td>
+              </tr>
+              <tr>
+                <td class="metric-cell">PSNR <span class="arrow-up"></span></td>
+                <td class="best">22.47</td>
+                <td>17.46</td>
+              </tr>
+              <!-- S2L2A‡ -->
+              <tr>
+                <td rowspan="2" class="target-cell"><b>S2L2A<sup>‡</sup></b></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.06</td>
+                <td>0.10</td>
+              </tr>
+              <tr>
+                <td class="metric-cell">PSNR <span class="arrow-up"></span></td>
+                <td>14.40</td>
+                <td class="best">16.18</td>
+              </tr>
+              <!-- LatLon -->
+              <tr>
+                <td class="target-cell"><b>LatLon</b></td>
+                <td class="metric-cell">Mean km <span class="arrow-down"></span></td>
+                <td>98.35</td>
+                <td class="best">94.25</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="table-caption">
+            <b>Table 1:</b> Tile-Level Peak Capability Analysis. We report the oracle performance 
+            (best generation selected per tile) to demonstrate the upper bound of generation quality. 
+            <b>Bold</b> indicates the best result. <sup>†</sup> S2L2A not present among inputs. 
+            <sup>‡</sup> S2L1C not present among inputs.
+          </p>
+        </div>
+
+        <!-- Table 4: Leave-One-Out -->
+        <h3 class="title is-5" style="margin-top: 2.5rem;">Leave-One-Out Analysis</h3>
+        <div class="content has-text-justified">
+          <p>
+            We analyze the impact of removing individual conditioning modalities to reveal 
+            the physical couplings learned by the model.
+          </p>
+        </div>
+        <div class="table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Target</th>
+                <th>Removed</th>
+                <th>Metric</th>
+                <th>COP-GEN</th>
+                <th>TerraMind</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- DEM -->
+              <tr>
+                <td rowspan="5" class="target-cell"><b>DEM</b></td>
+                <td><i>w/o LatLon</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">47.44</td>
+                <td>140.01</td>
+              </tr>
+              <tr>
+                <td><i>w/o LULC</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">46.96</td>
+                <td>140.80</td>
+              </tr>
+              <tr>
+                <td><i>w/o S1RTC</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">54.85</td>
+                <td>140.86</td>
+              </tr>
+              <tr>
+                <td><i>w/o S2L1C</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">51.85</td>
+                <td>146.00</td>
+              </tr>
+              <tr>
+                <td><i>w/o S2L2A</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">45.78</td>
+                <td>146.71</td>
+              </tr>
+              <!-- LULC -->
+              <tr>
+                <td rowspan="5" class="target-cell"><b>LULC</b></td>
+                <td><i>w/o LatLon</i></td>
+                <td class="metric-cell">Top-1 Acc <span class="arrow-up"></span></td>
+                <td class="best">0.81</td>
+                <td>0.80</td>
+              </tr>
+              <tr>
+                <td><i>w/o DEM</i></td>
+                <td class="metric-cell">Top-1 Acc <span class="arrow-up"></span></td>
+                <td class="best">0.80</td>
+                <td class="best">0.80</td>
+              </tr>
+              <tr>
+                <td><i>w/o S1RTC</i></td>
+                <td class="metric-cell">Top-1 Acc <span class="arrow-up"></span></td>
+                <td>0.79</td>
+                <td class="best">0.80</td>
+              </tr>
+              <tr>
+                <td><i>w/o S2L1C</i></td>
+                <td class="metric-cell">Top-1 Acc <span class="arrow-up"></span></td>
+                <td class="best">0.80</td>
+                <td class="best">0.80</td>
+              </tr>
+              <tr>
+                <td><i>w/o S2L2A</i></td>
+                <td class="metric-cell">Top-1 Acc <span class="arrow-up"></span></td>
+                <td class="best">0.80</td>
+                <td class="best">0.80</td>
+              </tr>
+              <!-- S1RTC -->
+              <tr>
+                <td rowspan="5" class="target-cell"><b>S1RTC</b></td>
+                <td><i>w/o LatLon</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td>2.70</td>
+                <td class="best">2.63</td>
+              </tr>
+              <tr>
+                <td><i>w/o DEM</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td>2.75</td>
+                <td class="best">2.63</td>
+              </tr>
+              <tr>
+                <td><i>w/o LULC</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td>2.76</td>
+                <td class="best">2.63</td>
+              </tr>
+              <tr>
+                <td><i>w/o S2L1C</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td>2.70</td>
+                <td class="best">2.64</td>
+              </tr>
+              <tr>
+                <td><i>w/o S2L2A</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td>2.68</td>
+                <td class="best">2.62</td>
+              </tr>
+              <!-- S2L1C -->
+              <tr>
+                <td rowspan="5" class="target-cell"><b>S2L1C</b></td>
+                <td><i>w/o LatLon</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.02</td>
+                <td>0.11</td>
+              </tr>
+              <tr>
+                <td><i>w/o DEM</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.02</td>
+                <td>0.11</td>
+              </tr>
+              <tr>
+                <td><i>w/o LULC</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.02</td>
+                <td>0.11</td>
+              </tr>
+              <tr>
+                <td><i>w/o S1RTC</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.02</td>
+                <td>0.11</td>
+              </tr>
+              <tr>
+                <td><i>w/o S2L2A</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.06</td>
+                <td>0.12</td>
+              </tr>
+              <!-- S2L2A -->
+              <tr>
+                <td rowspan="5" class="target-cell"><b>S2L2A</b></td>
+                <td><i>w/o LatLon</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.02</td>
+                <td>0.10</td>
+              </tr>
+              <tr>
+                <td><i>w/o DEM</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.02</td>
+                <td>0.10</td>
+              </tr>
+              <tr>
+                <td><i>w/o LULC</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.02</td>
+                <td>0.10</td>
+              </tr>
+              <tr>
+                <td><i>w/o S1RTC</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.02</td>
+                <td>0.10</td>
+              </tr>
+              <tr>
+                <td><i>w/o S2L1C</i></td>
+                <td class="metric-cell">MAE <span class="arrow-down"></span></td>
+                <td class="best">0.07</td>
+                <td>0.10</td>
+              </tr>
+              <!-- LatLon -->
+              <tr>
+                <td rowspan="5" class="target-cell"><b>LatLon</b></td>
+                <td><i>w/o DEM</i></td>
+                <td class="metric-cell">Mean km <span class="arrow-down"></span></td>
+                <td>210.54</td>
+                <td class="best">90.67</td>
+              </tr>
+              <tr>
+                <td><i>w/o LULC</i></td>
+                <td class="metric-cell">Mean km <span class="arrow-down"></span></td>
+                <td>188.70</td>
+                <td class="best">95.50</td>
+              </tr>
+              <tr>
+                <td><i>w/o S1RTC</i></td>
+                <td class="metric-cell">Mean km <span class="arrow-down"></span></td>
+                <td>173.09</td>
+                <td class="best">78.23</td>
+              </tr>
+              <tr>
+                <td><i>w/o S2L1C</i></td>
+                <td class="metric-cell">Mean km <span class="arrow-down"></span></td>
+                <td>193.43</td>
+                <td class="best">138.83</td>
+              </tr>
+              <tr>
+                <td><i>w/o S2L2A</i></td>
+                <td class="metric-cell">Mean km <span class="arrow-down"></span></td>
+                <td>182.45</td>
+                <td class="best">77.41</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="table-caption">
+            <b>Table 2:</b> Tile-Level Leave-One-Out Analysis. COP-GEN shows clear dominance in 
+            DEM reconstruction (MAE) and optical bands (S2L1C/S2L2A), while TerraMind demonstrates 
+            stronger localization capabilities (LatLon).
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Conclusion -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Conclusion</h2>
+        <div class="content has-text-justified">
+          <p>
+            We present <b>COP-GEN</b>, the first multimodal generative model for Earth observation 
+            that successfully combines multiple Copernicus modalities into a single <b>stochastic 
+            framework</b>. By learning joint probability distributions across sensors, COP-GEN 
+            can estimate multiple physically plausible realisations of a scene conditioned on 
+            any subset of input modalities.
+          </p>
+          <p>
+            This work is as much about the architecture as it is about <b>how generative Earth 
+            observation models should be evaluated</b> — moving beyond single-reference metrics 
+            to embrace the inherent uncertainty of cross-modal mappings.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--BibTex citation -->
+<section class="section hero" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{espinosa2025copgen,
+  title={COP-GEN: Latent Diffusion Transformer for Copernicus Earth Observation Data},
+  author={Espinosa, Miguel and Author2 and Author3 and Author4 and Czerkawski, Mikolaj},
+  journal={arXiv preprint},
+  year={2025}
+}</code></pre>
+  </div>
+</section>
+<!--End BibTex citation -->
+
+<footer class="footer is-light">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+<!-- End of Statcounter Code -->
+
+</body>
+</html>
