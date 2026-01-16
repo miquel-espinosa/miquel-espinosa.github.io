@@ -220,27 +220,26 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">COP-GEN</h1>
-            <h2 class="subtitle is-3">Latent Diffusion Transformer for Copernicus Earth Observation Data</h2>
-            <h3 class="subtitle is-5" style="margin-top: -0.5rem;">Generation Stochastic by Design</h3>
+            <h1 class="title is-1 publication-title">🌍 COP-GEN</h1>
+            <h2 class="subtitle is-3">Latent Diffusion Transformer for<br>Copernicus Earth Observation Data</h2>
+            <h3 class="subtitle is-4" style="margin-top: -0.5rem;"><i>Generation Stochastic by Design</i></h3>
             <div class="is-size-5 publication-authors">
               <!-- Paper authors -->
               <span class="author-block">
-                <a href="https://miquel-espinosa.github.io/" target="_blank">Miguel Espinosa</a><sup>*1,2</sup>,</span>
+                <a href="https://miquel-espinosa.github.io/" target="_blank">Miguel Espinosa</a><sup>1</sup>,</span>
               <span class="author-block">
-                <a href="#" target="_blank">Author 2</a><sup>2</sup>,</span>
+                <a href="https://cin.philab.esa.int/databases/researchers-db/eva-gmelich-meijling" target="_blank">Eva Gmelich Meijling</a><sup>2</sup>,</span>
               <span class="author-block">
-                <a href="#" target="_blank">Author 3</a><sup>3</sup>,</span>
+                <a href="https://sites.google.com/uniroma1.it/valeriomarsocci" target="_blank">Valerio Marsocci</a><sup>2</sup>,</span>
               <span class="author-block">
-                <a href="#" target="_blank">Author 4</a><sup>4</sup>,</span>
+                <a href="https://elliotjcrowley.github.io/" target="_blank">Elliot J. Crowley</a><sup>1</sup>,</span>
               <span class="author-block">
-                <a href="https://mikonvergence.github.io/" target="_blank">Mikolaj Czerkawski</a><sup>5</sup>
+                <a href="https://mikonvergence.github.io/" target="_blank">Mikolaj Czerkawski</a><sup>3</sup>
               </span>
             </div>
 
             <div class="is-size-5 publication-authors">
-              <span class="author-block"><sup>1</sup>University of Edinburgh, <sup>2</sup>European Space Agency (ESA), <sup>3</sup>Institution 3, <sup>4</sup>Institution 4, <sup>5</sup>Asterisk Labs<br>2025</span>
-              <span class="eql-cntrb"><small><br><sup>*</sup>First author</small></span>
+              <span class="author-block"><sup>1</sup>University of Edinburgh, <sup>2</sup>European Space Agency (ESA), <sup>3</sup>Asterisk Labs<br>2025</span>
             </div>
 
             <div class="column has-text-centered">
@@ -258,7 +257,7 @@
 
               <!-- Github link -->
               <span class="link-block">
-                <a href="#" target="_blank"
+                <a href="https://github.com/miquel-espinosa/COP-GEN" target="_blank"
                 class="external-link button is-normal is-rounded is-dark">
                 <span class="icon">
                   <i class="fab fa-github"></i>
@@ -269,7 +268,7 @@
 
               <!-- Hugging Face model -->
               <span class="link-block">
-                <a href="#" target="_blank"
+                <a href="https://huggingface.co/mespinosami/copgen-base" target="_blank"
                 class="external-link button is-normal is-rounded is-dark">
                 <span class="icon">
                   <i class="fa-huggingface"></i>
@@ -280,12 +279,12 @@
 
               <!-- Hugging Face demo -->
               <span class="link-block">
-                <a href="#" target="_blank"
+                <a href="https://huggingface.co/collections/mespinosami/copgen" target="_blank"
                 class="external-link button is-normal is-rounded is-dark">
                 <span class="icon">
                   <i class="fa-huggingface"></i>
                 </span>
-                <span>Demo</span>
+                <span>Collection</span>
               </a>
             </span>
 
@@ -316,7 +315,8 @@
         <div class="column has-text-centered">
           <img src="static/images/fig1-diversity.png" alt="COP-GEN generates diverse outputs" style="max-width: 100%; margin: 0 auto;">
           <h2 class="subtitle has-text-centered" style="max-width: 90%; margin: 1rem auto 0;">
-            <b>Figure 1:</b> Conditional generation of Sentinel-2 L2A imagery from DEM and LULC inputs. 
+            <b>Figure 1:</b> Conditional generation of Sentinel-2 L2A imagery from DEM and LULC inputs
+            (geolocation is shown only for reference, not used for conditioning).
             <b>COP-GEN</b> produces <b>diverse and physically consistent outputs</b>, demonstrating variability 
             in spectral appearance, illumination, and atmospheric conditions while preserving topographic 
             and land-cover constraints. This highlights the model's ability to capture <b>one-to-many 
@@ -327,6 +327,18 @@
     </div>
   </div>
 </section>
+
+<!-- Modal Image for Architecture -->
+<div id="imageModal" class="modal">
+  <div class="modal-background" onclick="closeModal()"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img id="modalImage" src="static/images/fig2-architecture.png" alt="COP-GEN Architecture">
+    </p>
+  </div>
+  <button class="modal-close is-large" aria-label="close" onclick="closeModal()"></button>
+</div>
+<!-- End Modal Image -->
 
 <!-- Abstract -->
 <section class="section hero is-light">
@@ -363,7 +375,7 @@
 <section class="section hero">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
-      <div class="column">
+      <div class="column is-four-fifths">
         <h2 class="title is-3">
           <span style="background-color: #E8F4E8; color: #2E7D32; padding: 0.2em 0.4em; border-radius: 0.3em">Stochastic</span> 
           vs 
@@ -371,26 +383,83 @@
         </h2>
         <div class="content has-text-justified">
           <p>
-            Existing multimodal Earth observation models are typically <b>deterministic</b> — given the 
-            same input conditions, they always produce the same output. This forces models to regress 
-            toward a <b>conditional mean</b>, producing blurry, texture-less predictions that don't 
-            capture the true variability of Earth's surface.
+            Relationships between Earth observation modalities are inherently <b>non-injective</b>: 
+            identical conditioning information—such as terrain elevation or land-cover class—can 
+            correspond to multiple physically plausible observations. Such mappings are inherently 
+            <b>one-to-many</b>, as shown in Figure 1.
+          </p>
+          <p>
+            Existing multimodal Earth observation models are typically <b>deterministic</b>—given the 
+            same input conditions, they always produce the same output. Models optimized to minimize 
+            pointwise error against a single ground truth inevitably regress toward <b>conditional means</b>, 
+            suppressing variability that is physically relevant and present in real-world observations.
+          </p>
+          <p>
+            <b>Stochastic generative modeling</b> provides an alternative route. By learning joint 
+            probability distributions across sensors, generative models can estimate multiple physically 
+            plausible realisations of a scene conditioned on a subset of input modalities. This approach 
+            aligns with remote sensing practice, where environmental processes are dynamic, observations 
+            are most often incomplete, and many different outputs are valid.
           </p>
         </div>
 
-        <div class="columns is-centered">
-          <div class="column is-10">
-            <figure class="result-figure">
-              <img src="static/images/fig3-latlon-distribution.png" alt="COP-GEN vs TerraMind lat-lon distribution">
-              <figcaption>
-                <b>Figure 2:</b> Geospatial distribution analysis. Given only DEM and LULC inputs, 
-                we predict latitude-longitude coordinates (n=50 runs). <b style="color: #FF9800;">TerraMind</b> 
-                (deterministic) collapses to a single mode, whereas <b style="color: #4CAF50;">COP-GEN</b> 
-                (stochastic) predicts a distribution of plausible locations sharing similar topographic 
-                and biome characteristics.
-              </figcaption>
-            </figure>
+        <div id="stochastic-carousel" class="carousel results-carousel">
+                    
+          <div class="item">
+            <img src="static/images/latlon/crops.png" alt="COP-GEN vs TerraMind lat-lon distribution">
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 2:</b> Geospatial distribution analysis. Given only DEM and LULC inputs, 
+              we predict latitude-longitude coordinates (n=50 runs). <b style="color: #FF9800;">TerraMind</b> 
+              (deterministic) collapses to a single mode, whereas <b style="color: #4CAF50;">COP-GEN</b> 
+              (stochastic) predicts a distribution of plausible locations sharing similar topographic 
+              and biome characteristics.
+            </h2>
           </div>
+                    
+          <div class="item">
+            <img src="static/images/latlon/river.png" alt="COP-GEN vs TerraMind lat-lon distribution">
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 2:</b> Geospatial distribution analysis. Given only DEM and LULC inputs, 
+              we predict latitude-longitude coordinates (n=50 runs). <b style="color: #FF9800;">TerraMind</b> 
+              (deterministic) collapses to a single mode, whereas <b style="color: #4CAF50;">COP-GEN</b> 
+              (stochastic) predicts a distribution of plausible locations sharing similar topographic 
+              and biome characteristics.
+            </h2>
+          </div>
+                    
+          <div class="item">
+            <img src="static/images/latlon/bare-ground.png" alt="COP-GEN vs TerraMind lat-lon distribution">
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 2:</b> Geospatial distribution analysis. Given only DEM and LULC inputs, 
+              we predict latitude-longitude coordinates (n=50 runs). <b style="color: #FF9800;">TerraMind</b> 
+              (deterministic) collapses to a single mode, whereas <b style="color: #4CAF50;">COP-GEN</b> 
+              (stochastic) predicts a distribution of plausible locations sharing similar topographic 
+              and biome characteristics.
+            </h2>
+          </div>
+                    
+          <div class="item">
+            <img src="static/images/latlon/city.png" alt="COP-GEN vs TerraMind lat-lon distribution">
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 2:</b> Geospatial distribution analysis. Given only DEM and LULC inputs, 
+              we predict latitude-longitude coordinates (n=50 runs). <b style="color: #FF9800;">TerraMind</b> 
+              (deterministic) collapses to a single mode, whereas <b style="color: #4CAF50;">COP-GEN</b> 
+              (stochastic) predicts a distribution of plausible locations sharing similar topographic 
+              and biome characteristics.
+            </h2>
+          </div>
+                    
+          <div class="item">
+            <img src="static/images/latlon/trees.png" alt="COP-GEN vs TerraMind lat-lon distribution">
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 2:</b> Geospatial distribution analysis. Given only DEM and LULC inputs, 
+              we predict latitude-longitude coordinates (n=50 runs). <b style="color: #FF9800;">TerraMind</b> 
+              (deterministic) collapses to a single mode, whereas <b style="color: #4CAF50;">COP-GEN</b> 
+              (stochastic) predicts a distribution of plausible locations sharing similar topographic 
+              and biome characteristics.
+            </h2>
+          </div>
+
         </div>
 
       </div>
@@ -422,12 +491,19 @@
         <div class="columns is-centered">
           <div class="column is-12">
             <figure class="result-figure">
-              <img src="static/images/fig2-architecture.png" alt="COP-GEN Architecture">
+              <img src="static/images/fig2-architecture.png" alt="COP-GEN Architecture" 
+                   onclick="showModal('static/images/fig2-architecture.png')" 
+                   style="cursor: zoom-in;">
               <figcaption>
-                <b>Figure 3:</b> COP-GEN architecture. Each modality is encoded by a trained VAE 
-                into latent tokens, then processed jointly by a U-ViT diffusion backbone with 
-                modality-specific timestep embeddings. This enables flexible any-to-any conditional 
-                generation without retraining.
+                <b>Figure 3:</b> COP-GEN architecture, training, and inference overview. Multimodal 
+                inputs (optical, radar, elevation, land-cover, geolocation, and timestamps) are 
+                encoded into latent representations using modality-specific VAEs (or directly 
+                tokenized for scalar inputs). All tokens, augmented with modality-specific diffusion 
+                timestep embeddings, are processed by a shared transformer diffusion backbone. The 
+                model is trained to jointly predict noise for all modalities. At inference, modalities 
+                can be either sampled from noise or fixed at timestep zero, enabling both unconditional 
+                generation and flexible any-to-any conditional translation across modalities.
+                <br><small style="color: #666;"><i>🔍 Click image to zoom</i></small>
               </figcaption>
             </figure>
           </div>
@@ -501,8 +577,18 @@
             </figure>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <h3 class="title is-5" style="margin-top: 2rem;">Spectral Fidelity Across Land-Cover Classes</h3>
+
+<!-- Conditional Generation Gallery -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-5">Spectral Fidelity Across Land-Cover Classes</h3>
         <div class="content has-text-justified">
           <p>
             COP-GEN learns physically meaningful spectral relationships. Per-pixel spectral 
@@ -511,20 +597,57 @@
           </p>
         </div>
 
-        <div class="columns is-centered">
-          <div class="column is-10">
-            <figure class="result-figure">
-              <img src="static/images/fig5-spectral-profiles.png" alt="Spectral profiles by class">
-              <figcaption>
-                <b>Figure 5:</b> Per-pixel spectral reflectance profiles across LULC classes. 
-                COP-GEN closely matches the characteristic Sentinel-2 band responses of vegetation, 
-                bare soil, water, built-up areas, demonstrating physically grounded generation.
-              </figcaption>
-            </figure>
+        <div id="results-carousel-2" class="carousel results-carousel">
+
+          <div class="item">
+            <img src="static/images/spectral-profiles/australia.png" alt="Spectral profiles by class"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 5:</b> Per-pixel spectral reflectance profiles across LULC classes. 
+              COP-GEN closely matches the characteristic Sentinel-2 band responses of vegetation, 
+              bare soil, water, built-up areas, demonstrating physically grounded generation.
+            </h2>
           </div>
+
+          <div class="item">
+            <img src="static/images/spectral-profiles/coast.png" alt="Spectral profiles by class"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 5:</b>Per-pixel spectral reflectance profiles across LULC classes. 
+              COP-GEN closely matches the characteristic Sentinel-2 band responses of vegetation, 
+              bare soil, water, built-up areas, demonstrating physically grounded generation.
+            </h2>
+          </div>
+
+          <div class="item">
+            <img src="static/images/spectral-profiles/river.png" alt="Spectral profiles by class"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 5:</b> Per-pixel spectral reflectance profiles across LULC classes. 
+              COP-GEN closely matches the characteristic Sentinel-2 band responses of vegetation, 
+              bare soil, water, built-up areas, demonstrating physically grounded generation.
+            </h2>
+          </div>
+
+          <div class="item">
+            <img src="static/images/spectral-profiles/sea.png" alt="Spectral profiles by class"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 5:</b> Per-pixel spectral reflectance profiles across LULC classes. 
+              COP-GEN closely matches the characteristic Sentinel-2 band responses of vegetation, 
+              bare soil, water, built-up areas, demonstrating physically grounded generation.
+            </h2>
+          </div>
+
         </div>
 
-        <h3 class="title is-5" style="margin-top: 2rem;">Band Infilling</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Band Infilling -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-5">Band Infilling</h3>
         <div class="content has-text-justified">
           <p>
             COP-GEN can also perform <b>band infilling</b> — generating missing spectral bands 
@@ -556,7 +679,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h3 class="title is-5">Conditional Generation Gallery</h3>
+        <h3 class="title is-5">Conditional Generation</h3>
         <div class="content has-text-justified">
           <p>
             Additional examples of DEM + LULC → Sentinel-2 L2A generation, demonstrating 
@@ -566,19 +689,49 @@
         </div>
 
         <div id="results-carousel-2" class="carousel results-carousel">
+          
           <div class="item">
-            <img src="static/images/conditional-examples-1.png" alt="Conditional generation examples"/>
+            <img src="static/images/one-by-one/crops.png" alt="Conditional generation examples"/>
             <h2 class="subtitle has-text-centered">
-              Various geographic tiles showing COP-GEN's diverse conditional generation 
-              compared to TerraMind's collapsed outputs.
+              <b>Figure 7:</b> Conditional Sentinel-2 L2A generation from DEM and LULC, showing diverse realistic outputs while preserving topographic and land-cover consistency.
             </h2>
           </div>
+
           <div class="item">
-            <img src="static/images/conditional-examples-2.png" alt="More conditional generation examples"/>
+            <img src="static/images/one-by-one/australia.png" alt="Conditional generation examples"/>
             <h2 class="subtitle has-text-centered">
-              Additional examples across different biomes and terrain types.
+              <b>Figure 7:</b> Conditional Sentinel-2 L2A generation from DEM and LULC, showing diverse realistic outputs while preserving topographic and land-cover consistency.
             </h2>
           </div>
+          
+          <div class="item">
+            <img src="static/images/one-by-one/bare-ground.png" alt="Conditional generation examples"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 7:</b> Conditional Sentinel-2 L2A generation from DEM and LULC, showing diverse realistic outputs while preserving topographic and land-cover consistency.
+            </h2>
+          </div>
+          
+          <div class="item">
+            <img src="static/images/one-by-one/built-up.png" alt="Conditional generation examples"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 7:</b> Conditional Sentinel-2 L2A generation from DEM and LULC, showing diverse realistic outputs while preserving topographic and land-cover consistency.
+            </h2>
+          </div>
+          
+          <div class="item">
+            <img src="static/images/one-by-one/city-crop.png" alt="Conditional generation examples"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 7:</b> Conditional Sentinel-2 L2A generation from DEM and LULC, showing diverse realistic outputs while preserving topographic and land-cover consistency.
+            </h2>
+          </div>
+          
+          <div class="item">
+            <img src="static/images/one-by-one/coast.png" alt="Conditional generation examples"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 7:</b> Conditional Sentinel-2 L2A generation from DEM and LULC, showing diverse realistic outputs while preserving topographic and land-cover consistency.
+            </h2>
+          </div>
+          
         </div>
         
       </div>
@@ -979,11 +1132,11 @@
 <section class="section hero" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{espinosa2025copgen,
+    <pre><code>@article{espinosa2026copgen,
   title={COP-GEN: Latent Diffusion Transformer for Copernicus Earth Observation Data},
-  author={Espinosa, Miguel and Author2 and Author3 and Author4 and Czerkawski, Mikolaj},
+  author={Espinosa, Miguel and Gmelich Meijling, Eva and Marsocci, Valerio and Crowley, Elliot J. and Czerkawski, Mikolaj},
   journal={arXiv preprint},
-  year={2025}
+  year={2026}
 }</code></pre>
   </div>
 </section>
@@ -1008,6 +1161,44 @@
 <!-- Statcounter tracking code -->
 <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
 <!-- End of Statcounter Code -->
+
+<script>
+// Simple modal functions
+function showModal(imageSrc) {
+  console.log("showModal called with:", imageSrc);
+  document.getElementById('modalImage').src = imageSrc;
+  document.getElementById('imageModal').classList.add('is-active');
+}
+
+function closeModal() {
+  console.log("closeModal called");
+  document.getElementById('imageModal').classList.remove('is-active');
+  document.getElementById('modalImage').classList.remove('zoomed');
+}
+
+// Keyboard handler for ESC key
+document.addEventListener('keydown', function(event) {
+  if (event.code === 'Escape') {
+    closeModal();
+  }
+});
+
+// Zoom functionality 
+document.getElementById('modalImage').addEventListener('click', function(e) {
+  e.stopPropagation(); // Prevent modal from closing
+  
+  if (this.classList.contains('zoomed')) {
+    this.classList.remove('zoomed');
+  } else {
+    // Set zoom origin to click position
+    const rect = this.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    this.style.transformOrigin = `${x}px ${y}px`;
+    this.classList.add('zoomed');
+  }
+});
+</script>
 
 </body>
 </html>
