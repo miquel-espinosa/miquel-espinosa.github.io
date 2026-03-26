@@ -1,5 +1,39 @@
 ---
 ---
+@article{espinosa2026copgen,
+  abbr={arxiv},
+  author = {Miguel Espinosa and Eva Gmelich Meijling and Valerio Marsocci and Elliot J. Crowley and Mikolaj Czerkawski},
+  title = {COP-GEN: Latent Diffusion Transformer for Copernicus Earth Observation Data},
+  abstract={Earth observation applications increasingly rely on data from multiple sensors,
+            including optical, radar, elevation, and land-cover products. Relationships between
+            these modalities are fundamental for data integration but are inherently non-injective:
+            identical conditioning information can correspond to multiple physically plausible observations.
+            Thus, such conditional mappings should be parametrised as data distributions. As a result,
+            deterministic models tend to collapse toward conditional means and fail to represent the
+            uncertainty and variability required for tasks such as data completion and cross-sensor
+            translation. We introduce COP-GEN, a multimodal latent diffusion transformer that models
+            the joint distribution of heterogeneous Earth Observation modalities at their native spatial
+            resolutions. By parameterising cross-modal mappings as conditional distributions, COP-GEN
+            enables flexible any-to-any conditional generation, including zero-shot modality translation,
+            spectral band infilling, and generation under partial or missing inputs, without task-specific
+            retraining. Experiments on a large-scale global multimodal dataset show that COP-GEN generates
+            diverse yet physically consistent realisations while maintaining strong peak fidelity across
+            optical, radar, and elevation modalities. Qualitative and quantitative analyses demonstrate
+            that the model captures meaningful cross-modal structure and systematically adapts its output
+            uncertainty as conditioning information increases. These results highlight the practical
+            importance of stochastic generative modeling for Earth observation and motivate evaluation
+            protocols that move beyond single-reference, pointwise metrics.},
+  code={https://github.com/miquel-espinosa/COP-GEN},
+  pdf={https://arxiv.org/pdf/2603.03239},
+  year = {2026},
+  journal = {arXiv},
+  institution = {University of Edinburgh, European Space Agency, Asterisk Labs},
+  url = {https://arxiv.org/abs/2603.03239},
+  preview={cop-gen.jpg},
+  bibtex_show={true},
+  selected={true},
+  website={https://miquel-espinosa.github.io/cop-gen/},
+}
 @article{espinosa2025copgenbeta,
   abbr={arxiv},
   author = {Miguel Espinosa and Valerio Marsocci and Yuru Jia and Elliot J. Crowley and Mikolaj Czerkawski},
