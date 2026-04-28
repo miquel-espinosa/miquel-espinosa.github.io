@@ -288,6 +288,17 @@
               </a>
             </span>
 
+              <!-- Hugging Face demo -->
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/Major-TOM/COP-GEN-Benchmark" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fa-huggingface"></i>
+                </span>
+                <span>Benchmark</span>
+              </a>
+            </span>
+
             <!-- ArXiv abstract Link -->
             <span class="link-block">
               <a href="https://arxiv.org/abs/2603.03239" target="_blank"
@@ -348,17 +359,31 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            The domain of Earth observation is home to hundreds of petabytes of observational data 
-            from a plethora of diverse sensing instruments. Naturally, conditional mappings between 
-            subsets of available sensors are useful for interpreting the data. However, these 
-            conditional mappings are generally <b>not injective</b> and should be parameterised as 
-            <b>data distributions</b>.
+            Earth observation increasingly relies on multiple sensors — optical, radar, elevation, 
+            and land-cover products. Relationships between these modalities are fundamental for 
+            data integration, yet they are inherently <b>non-injective</b>: identical conditioning 
+            information can correspond to many physically plausible observations and should therefore 
+            be parameterised as <b>conditional distributions</b>. Deterministic models, by contrast, 
+            collapse toward conditional means and fail to represent the variability required for 
+            tasks such as data completion and cross-sensor translation.
           </p>
           <p>
-            <b>COP-GEN</b> is the first generative model for Earth observation that can approximate 
-            these multi-modal distributions owing to its <b>latent diffusion transformer architecture</b>. 
-            Consequently, unlike its state-of-the-art counterparts, COP-GEN can generate highly diverse 
-            distributions that represent the diversity of the underlying data more faithfully.
+            We introduce <b>COP-GEN</b>, a multimodal <b>latent diffusion transformer</b> that 
+            models the joint distribution of heterogeneous Earth observation modalities at their 
+            <b>native spatial resolutions</b>. By parameterising cross-modal mappings as 
+            conditional distributions, COP-GEN enables flexible <b>any-to-any conditional 
+            generation</b> — zero-shot modality translation, spectral band infilling, and generation 
+            under partial or missing inputs — without task-specific retraining.
+          </p>
+          <p>
+            On a large-scale global multimodal dataset, COP-GEN generates diverse yet physically 
+            consistent realisations while maintaining strong peak fidelity, and systematically 
+            narrows its output uncertainty as conditioning becomes more informative. We further 
+            release a <b>stochastic benchmark</b> built from multi-temporal Sentinel-2 observations 
+            for distribution-level comparison of generative EO models. On this benchmark, COP-GEN 
+            covers <b>90% of the real observation manifold</b> and <b>63% of its per-band 
+            reflectance range</b>, while the strongest competing method collapses to 2.8% and 18%, 
+            respectively.
           </p>
           <div class="key-insight">
             <strong>🎯 Key Insight:</strong> Cross-modal mappings in Earth observation are inherently 
@@ -691,7 +716,21 @@
         <div id="results-carousel-2" class="carousel results-carousel">
           
           <div class="item">
+            <img src="static/images/one-by-one/europe.png" alt="Conditional generation examples"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 7:</b> Conditional Sentinel-2 L2A generation from DEM and LULC, showing diverse realistic outputs while preserving topographic and land-cover consistency.
+            </h2>
+          </div>
+
+          <div class="item">
             <img src="static/images/one-by-one/crops.png" alt="Conditional generation examples"/>
+            <h2 class="subtitle has-text-centered">
+              <b>Figure 7:</b> Conditional Sentinel-2 L2A generation from DEM and LULC, showing diverse realistic outputs while preserving topographic and land-cover consistency.
+            </h2>
+          </div>
+
+          <div class="item">
+            <img src="static/images/one-by-one/alaska.png" alt="Conditional generation examples"/>
             <h2 class="subtitle has-text-centered">
               <b>Figure 7:</b> Conditional Sentinel-2 L2A generation from DEM and LULC, showing diverse realistic outputs while preserving topographic and land-cover consistency.
             </h2>
@@ -754,7 +793,10 @@
             we generate multiple independent samples and report the best-matching generation. 
             This isolates the model's representational capacity from stochastic variance and 
             answers: <em>does the model's learned distribution contain high-fidelity realisations 
-            consistent with the ground truth?</em>
+            consistent with the ground truth?</em> The complementary distribution-level question — 
+            <em>does the full set of generated samples match the distribution of plausible real 
+            observations?</em> — is addressed by our 
+            <a href="#stochastic-benchmark">Stochastic Benchmark</a> below.
           </p>
         </div>
 
@@ -1102,6 +1144,171 @@
 </section>
 
 
+<!-- Stochastic Benchmark -->
+<section class="section hero is-light" id="stochastic-benchmark">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-4" style="border-bottom: 2px solid #9C27B0; padding-bottom: 0.5rem;">
+          <span style="color: #6A1B9A;">🎲</span> Stochastic Benchmark
+        </h2>
+
+        <div class="content has-text-justified" style="margin-top: 1.5rem;">
+          <p>
+            Oracle metrics measure peak single-sample fidelity; they cannot tell us whether 
+            the model's <em>distribution</em> of outputs matches the true distribution of 
+            plausible observations. We introduce a dedicated <b>stochastic benchmark</b> that 
+            directly compares <b>16 generated samples per cell</b> against <b>16 real 
+            multi-temporal Sentinel-2 acquisitions</b> across <b>489 geographically diverse 
+            cells</b>, all conditioned on the same DEM and LULC inputs.
+          </p>
+          <p>
+            We evaluate two complementary streams: <b>perceptual fidelity</b> in three embedding 
+            spaces — 12-band spectral vectors, ResNet-50 RGB features, and LPIPS — using 1-NN 
+            accuracy, k-NN Precision/Recall and intra-set diversity; and <b>physical consistency</b> 
+            via MMD, per-band Wasserstein distance, and spectral range coverage.
+          </p>
+        </div>
+
+        <div class="key-insight">
+          <strong>🔑 Diversity Collapse:</strong> TerraMind's 16 per-cell samples are nearly 
+          identical (recall = 0.028, spanning only 18% of the real spectral range). 
+          <b>COP-GEN covers 90% of the real spectral manifold</b> and is 9.1× more diverse 
+          in spectral space, 2.4× in RGB features, and 1.6× in LPIPS perceptual space.
+        </div>
+
+        <div class="table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Stream</th>
+                <th>Metric</th>
+                <th>COP-GEN</th>
+                <th>TerraMind</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="section-header">
+                <td colspan="4" style="text-align:left; font-weight:600; padding-left:0.5rem;">Spectral (12-band reflectance)</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">1-NN accuracy <span class="arrow-down"></span></td>
+                <td class="best">0.911 ± 0.075</td>
+                <td>0.985 ± 0.027</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">Precision (k=5) <span class="arrow-up"></span></td>
+                <td>0.289 ± 0.348</td>
+                <td class="best">0.483 ± 0.469</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">Recall (k=5) <span class="arrow-up"></span></td>
+                <td class="best">0.900 ± 0.264</td>
+                <td>0.028 ± 0.080</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">Intra-set distance</td>
+                <td class="best">0.455 ± 0.155</td>
+                <td>0.050 ± 0.015</td>
+              </tr>
+              <tr class="section-header">
+                <td colspan="4" style="text-align:left; font-weight:600; padding-left:0.5rem;">RGB (ResNet-50)</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">1-NN accuracy <span class="arrow-down"></span></td>
+                <td class="best">0.982 ± 0.031</td>
+                <td>0.998 ± 0.009</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">Precision (k=5) <span class="arrow-up"></span></td>
+                <td>0.086 ± 0.220</td>
+                <td class="best">0.119 ± 0.286</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">Recall (k=5) <span class="arrow-up"></span></td>
+                <td class="best">0.726 ± 0.370</td>
+                <td>0.001 ± 0.013</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">Intra-set distance</td>
+                <td class="best">13.39 ± 1.53</td>
+                <td>5.65 ± 0.76</td>
+              </tr>
+              <tr class="section-header">
+                <td colspan="4" style="text-align:left; font-weight:600; padding-left:0.5rem;">LPIPS</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">Intra-set distance</td>
+                <td class="best">0.470 ± 0.046</td>
+                <td>0.287 ± 0.058</td>
+              </tr>
+              <tr class="section-header">
+                <td colspan="4" style="text-align:left; font-weight:600; padding-left:0.5rem;">Physical consistency</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">MMD <span class="arrow-down"></span></td>
+                <td class="best">0.589 ± 0.287</td>
+                <td>1.149 ± 0.423</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">Wasserstein (mean, 12 bands) <span class="arrow-down"></span></td>
+                <td>0.143 ± 0.109</td>
+                <td class="best">0.117 ± 0.146</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="metric-cell">Spectral coverage <span class="arrow-up"></span></td>
+                <td class="best">0.629 ± 0.291</td>
+                <td>0.180 ± 0.144</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="table-caption">
+            <b>Table 3:</b> Stochastic benchmark across 489 cells with 16 samples per source 
+            (real, COP-GEN, TerraMind). Mean ± std reported. <b>Bold</b> indicates the best result.
+            For 1-NN accuracy and MMD lower is better; for Precision, Recall, and Coverage 
+            higher is better. Intra-set distance is a diversity measure (real spectral 
+            intra-set distance = 0.214, sitting between the two models).
+          </p>
+        </div>
+
+        <h3 class="title is-5" style="margin-top: 2rem;">The Realism–Diversity Trade-off</h3>
+        <div class="content has-text-justified">
+          <p>
+            TerraMind's advantages lie in metrics that reward proximity to the distribution centre 
+            (precision = 0.483, Wasserstein = 0.117): each sample lands near the densest region 
+            of the real manifold — a consequence of near-deterministic generation rather than 
+            superior stochastic modelling. COP-GEN trades a small amount of per-sample precision 
+            for <b>distribution-level coverage</b>, achieving 0.589 MMD (≈half of TerraMind's 1.149) 
+            and 63% spectral range coverage versus 18%. The same pattern holds across all three 
+            feature spaces, indicating that diversity collapse is a fundamental property of 
+            deterministic generators under one-to-many cross-modal mappings rather than an 
+            artefact of any single embedding.
+          </p>
+          <p>
+            <b>Reproducibility.</b> The full benchmark — 7,824 acquisitions per source, with 
+            canonical SHA-256 seed subsampling and pinned dependencies — is released on 
+            <a href="https://huggingface.co/datasets/Major-TOM/COP-GEN-Benchmark" target="_blank">HuggingFace</a> 
+            and reproducible end-to-end with a single command in ~20 minutes on a single A100 GPU.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- Conclusion -->
 <section class="section hero">
@@ -1111,16 +1318,30 @@
         <h2 class="title is-3">Conclusion</h2>
         <div class="content has-text-justified">
           <p>
-            We present <b>COP-GEN</b>, the first multimodal generative model for Earth observation 
-            that successfully combines multiple Copernicus modalities into a single <b>stochastic 
-            framework</b>. By learning joint probability distributions across sensors, COP-GEN 
-            can estimate multiple physically plausible realisations of a scene conditioned on 
-            any subset of input modalities.
+            We present <b>COP-GEN</b>, the first multimodal <b>latent diffusion transformer</b> 
+            that learns the joint distribution of heterogeneous Earth observation data at 
+            <b>native spatial resolutions</b>. Resolution-aware tokenisation, modality-specific 
+            latent encoders, and independent diffusion timesteps enable flexible <b>any-to-any 
+            conditional generation</b>, zero-shot modality translation, and spectral band infilling 
+            — all without task-specific retraining or aggressive resampling.
           </p>
           <p>
-            This work is as much about the architecture as it is about <b>how generative Earth 
-            observation models should be evaluated</b> — moving beyond single-reference metrics 
-            to embrace the inherent uncertainty of cross-modal mappings.
+            In contrast to deterministic approaches, COP-GEN captures the <em>one-to-many</em> 
+            physical mappings intrinsic to remote sensing: it maintains strong peak fidelity while 
+            producing diverse, physically plausible realisations that respect topography, land 
+            cover, and spectral signatures, and systematically narrows its output distribution as 
+            conditioning becomes more informative — <b>modulating variability rather than collapsing 
+            toward the conditional mean</b>.
+          </p>
+          <p>
+            This work also reframes <b>how generative EO models should be evaluated</b>. Pointwise 
+            metrics favour deterministic solutions and hide diversity collapse: on our stochastic 
+            benchmark a near-deterministic competitor wins per-sample precision (0.483 spectral) 
+            yet achieves only 2.8% recall and 18% spectral range coverage, whereas COP-GEN reaches 
+            <b>90%</b> and <b>63%</b> respectively — a gap that single-reference metrics cannot 
+            reveal. We release this benchmark to standardise distribution-level evaluation, and 
+            identify temporal sequence modelling, scaling to higher spatial resolutions, and 
+            hybrid deterministic–stochastic systems as natural extensions of this work.
           </p>
         </div>
       </div>
